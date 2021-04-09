@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Header from "./Header/Header";
 import styled, { createGlobalStyle } from "styled-components";
 import Footer from "./Header/Footer";
+// import Loader from "./Loader";
 
 const GlobalStyles = createGlobalStyle`
 
