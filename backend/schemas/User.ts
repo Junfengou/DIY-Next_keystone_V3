@@ -16,5 +16,8 @@ export const User = list({
         phone: text({isRequired: true}),
         drlic: text({isRequired: true}),
         additionalInfo: text(), 
+        rental: relationship({ref:"Rental.user"})
     }
 })
+
+

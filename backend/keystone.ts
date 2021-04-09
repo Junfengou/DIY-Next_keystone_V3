@@ -2,7 +2,11 @@ import { config, createSchema } from '@keystone-next/keystone/schema';
 import { withItemData, statelessSessions } from "@keystone-next/keystone/session";
 import { createAuth } from "@keystone-next/auth";
 import { User } from "./schemas/User";
-// import { Storage } from "./schemas/Storage";
+import { Employee } from "./schemas/Employee";
+import { Rental } from "./schemas/Rental";
+import { RentalList } from "./schemas/RentalList";
+import { StorageUnit } from "./schemas/StorageUnit";
+import { StorageUnitType } from "./schemas/StorageUnitType";
 
 import 'dotenv/config';
 // import { extendGraphqlSchema } from './mutations';
@@ -49,7 +53,7 @@ config({
   },
   lists: createSchema({
     // Schema items go in here
-    User
+    User, Employee, Rental, RentalList, StorageUnit, StorageUnitType
   }),
 
 //   extendGraphqlSchema,
