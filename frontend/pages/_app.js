@@ -2,14 +2,17 @@ import React from "react";
 import withData from "../lib/withData";
 import Page from "../components/Page";
 import { ApolloProvider } from "@apollo/client";
+import { RentalStateProvider } from "../lib/RentalState";
 // import { CartStateProvider } from "../lib/CartState";
 
 function MyApp({ Component, pageProps, apollo }) {
 	return (
 		<ApolloProvider client={apollo}>
-			<Page>
-				<Component {...pageProps} />
-			</Page>
+			<RentalStateProvider>
+				<Page>
+					<Component {...pageProps} />
+				</Page>
+			</RentalStateProvider>
 		</ApolloProvider>
 	);
 }

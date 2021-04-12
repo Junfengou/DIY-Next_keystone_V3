@@ -79,12 +79,12 @@ function Features() {
 export default Features;
 
 const FeatureStyles = styled.div`
-	height: 70em;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	margin: 5rem;
+	padding: 2rem;
 
 	h2 {
 		font-size: 3rem;
@@ -95,7 +95,7 @@ const FeatureStyles = styled.div`
 	}
 
 	@media (max-width: 1130px) {
-		height: 80em;
+		/* border: solid red; */
 
 		h2 {
 			font-size: 2rem;
