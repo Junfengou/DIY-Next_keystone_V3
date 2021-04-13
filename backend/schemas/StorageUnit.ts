@@ -3,6 +3,9 @@ import { text, password, integer, select, relationship } from "@keystone-next/fi
 
 
 export const StorageUnit = list({
+  ui: {
+    labelField: "unitNum"
+},
     fields: {
         price: integer({isRequired: true}),
         description: text({isRequired: true}),

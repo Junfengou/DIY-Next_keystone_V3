@@ -6,7 +6,11 @@ function StorageUnit({ item }) {
 	const { storageUnitType, id, unitType } = item;
 	const { grabUnit } = userRental();
 	return (
-		<SingleUnitStyles onClick={() => grabUnit(id)}>
+		<SingleUnitStyles
+			onClick={() =>
+				grabUnit(id, unitType.price, storageUnitType, unitType.unitNum)
+			}
+		>
 			<h3>{storageUnitType}</h3>
 			<h5>Unit # {unitType.unitNum}</h5>
 			<h5>${unitType.price / 100}</h5>

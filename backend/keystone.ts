@@ -55,8 +55,8 @@ config({
     // Schema items go in here
     User, Employee, Rental, RentalList, StorageUnit, StorageUnitType
   }),
-
-//   extendGraphqlSchema,
+    
+  // extendGraphqlSchema,
 
   ui: {
     // TODO: change this for roles
@@ -71,3 +71,35 @@ config({
     User: `id`
   })
 }));
+
+
+/*
+  Template:
+
+  const datebaseURL = ...
+
+  export default config({
+  // @ts-ignore
+  server: {
+    cors: {
+      origin: [process.env.FRONTEND_URL],
+      credentials: true,
+    },
+  },
+  db: {
+    adapter: 'mongoose',
+    url: databaseURL,
+    // TODO: Add data seeding here
+  },
+  lists: createSchema({
+    // Schema items go in here
+     User, Employee, Rental, RentalList, StorageUnit, StorageUnitType
+  }),
+  ui: {
+    // TODO: change this for roles
+    isAccessAllowed: () => true,
+  },
+  // TODO: Add session values here
+});
+
+*/

@@ -4,7 +4,7 @@ import { text, password, integer, select, relationship } from "@keystone-next/fi
 
 export const RentalList = list({
     fields: {
-        rental: relationship({ref: "Rental"}),
+        rentby: relationship({ref: "Rental", ui: {labelField: "rented by"}}),
         employee: relationship({ref: "Employee"}),
     }
 })
