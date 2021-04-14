@@ -19,9 +19,15 @@ function CartItem({ item }) {
 export default CartItem;
 
 const CartItemStyles = styled.li`
-	border: solid 1px var(--orange);
+	border-bottom: solid 1px var(--orange);
+	border-width: 60%;
 	padding: 1rem 2rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	button {
+		background: transparent;
+		border: none;
+	}
 `;

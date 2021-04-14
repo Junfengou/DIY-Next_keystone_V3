@@ -21,7 +21,7 @@ function Nav() {
 		<NavStyles>
 			<Link href="/about">About</Link>
 			<Link href="/faq">FAQ</Link>
-			<Link href="/reserve">Reserve</Link>
+			<Link href="/storages">Storages</Link>
 		</NavStyles>
 	);
 }

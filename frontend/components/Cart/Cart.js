@@ -11,6 +11,7 @@ import CartItem from "./CartItem";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
+import SickButton from "../styles/SickButton";
 
 const ADD_RENTAL_MUTATION = gql`
 	mutation ADD_RENTAL_MUTATION(
@@ -72,7 +73,7 @@ function Cart() {
 
 		setTimeout(() => {
 			window.location.reload();
-		}, 3000);
+		}, 2000);
 	}
 
 	return (
@@ -93,7 +94,7 @@ function Cart() {
 								setYear(pickedDate[3]);
 							}}
 						/>
-						<button type="submit">Submit this order</button>
+						<SickButton type="submit">Request Rental</SickButton>
 					</div>
 				</form>
 			</header>
