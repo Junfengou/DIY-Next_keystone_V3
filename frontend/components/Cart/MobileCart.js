@@ -108,7 +108,7 @@ function MobileCart() {
 export default MobileCart;
 
 const MobileCartStyles = styled.div`
-	padding: 5rem;
+	padding: 0 5rem;
 	height: 100vh;
 	display: flex;
 	justify-content: center;

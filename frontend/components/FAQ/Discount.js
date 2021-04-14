@@ -59,10 +59,11 @@ const DiscountStyles = styled.div`
 	display: grid;
 	justify-content: center;
 	align-items: center;
-	padding: 5rem;
+	/* padding: 5rem; */
 
 	.reserve {
-		margin-top: 12rem;
+		/* margin-top: 12rem; */
+		margin-top: 8rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

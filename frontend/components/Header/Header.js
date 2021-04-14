@@ -74,7 +74,8 @@ const HeaderStyles = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	background: var(--gray);
-	position: fixed;
+	overflow: hidden;
+	/* position: fixed; */
 	/* border: solid red; */
 
 	.btns {

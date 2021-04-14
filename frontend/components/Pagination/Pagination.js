@@ -29,8 +29,6 @@ function Pagination({ page }) {
 				Page {page} of {pageCount}
 			</p>
 
-			<p> {count} items total</p>
-
 			<Link href={`/storages/${page + 1}`}>
 				<a aria-disabled={page >= pageCount}>Next ⏩</a>
 			</Link>

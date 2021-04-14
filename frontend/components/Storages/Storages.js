@@ -61,7 +61,7 @@ const StorageStyles = styled.div`
 	grid-template-rows: max-content 1fr;
 	justify-items: center;
 	align-items: center;
-	padding-top: 10rem;
+	/* padding-top: 10rem; */
 
 	.pagination {
 		display: grid;
@@ -80,7 +80,7 @@ const StorageStyles = styled.div`
 		.items {
 			display: flex;
 			flex-direction: column;
-			gap: 1rem;
+			gap: 2rem;
 		}
 
 		@media (max-width: 1000px) {
