@@ -103,3 +103,19 @@ config({
 });
 
 */
+
+/*
+.env
+FRONTEND_URL="http://localhost:7777"
+
+COOKIE_SECRET="ilikethestonkstothemoooooooooooooooooooooooooooooon"
+
+DATABASE_URL=mongodb+srv://junfengou:1likeChina!@diycluster.yosmn.mongodb.net/test
+
+
+MAIL_HOST="smtp.ethereal.email"
+MAIL_PORT=587
+MAIL_USER="jude.deckow@ethereal.email"
+MAIL_PASS="3v1c9d9ZYdK59SsVtY"
+
+*/

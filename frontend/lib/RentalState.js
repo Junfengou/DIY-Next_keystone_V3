@@ -13,6 +13,7 @@ function RentalStateProvider({ children }) {
 	const [rental, setRental] = useState([]);
 	const [rentalPrice, setRentalPrice] = useState([]);
 	const [unit, setUnit] = useState([]);
+	const [cartOpen, setCartOpen] = useState(false);
 
 	// This function makes sure that there is no duplicates, verify by id
 	function grabUnit(id, price, unitType, unitNum) {
@@ -21,12 +22,55 @@ function RentalStateProvider({ children }) {
 				.reduce((map, obj) => map.set(obj.id, obj), new Map())
 				.values(),
 		]);
-		setRentalPrice([...rentalPrice, price]);
+		// setRentalPrice([...rentalPrice, price]);
+		setRentalPrice([
+			...[...rentalPrice, { id, price }]
+				.reduce((map, obj) => map.set(obj.id, obj), new Map())
+				.values(),
+		]);
 		setUnit([
-			...[...unit, { unitType, unitNum }]
+			...[...unit, { id, unitType, unitNum, price }]
 				.reduce((map, obj) => map.set(obj.unitNum, obj), new Map())
 				.values(),
 		]);
+	}
+
+	function deleteUnit(id) {
+		filterItem(setRental, rental, id);
+		filterItem(setRentalPrice, rentalPrice, id);
+		filterItem(setUnit, unit, id);
+		// setRental(
+		// 	rental.filter((item) => {
+		// 		return item.id != id;
+		// 	})
+		// );
+		// setRentalPrice(
+		// 	rentalPrice.filter((item) => {
+		// 		return item.id != id;
+		// 	})
+		// );
+		// setUnit(
+		// 	unit.filter((item) => {
+		// 		return item.id != id;
+		// 	})
+		// );
+	}
+
+	function filterItem(setLoopyLoop, loopyArr, id) {
+		setLoopyLoop(
+			loopyArr.filter((item) => {
+				return item.id != id;
+			})
+		);
+	}
+
+	function toggleCart() {
+		setCartOpen(!cartOpen);
+		console.log("hmm");
+	}
+
+	function closeCart() {
+		setCartOpen(false);
 	}
 
 	function emptyCart() {
@@ -35,7 +79,17 @@ function RentalStateProvider({ children }) {
 
 	return (
 		<LocalStateProvider
-			value={{ rental, grabUnit, rentalPrice, unit, emptyCart }}
+			value={{
+				rental,
+				grabUnit,
+				rentalPrice,
+				unit,
+				emptyCart,
+				toggleCart,
+				closeCart,
+				cartOpen,
+				deleteUnit,
+			}}
 		>
 			{children}
 		</LocalStateProvider>

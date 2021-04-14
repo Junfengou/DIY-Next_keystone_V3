@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { CURRENT_USER_QUERY } from "./User";
@@ -15,10 +16,17 @@ function SignOut() {
 	});
 
 	return (
-		<button type="button" onClick={signout} className="uppercase">
+		<ButtonStyle type="button" onClick={signout} className="uppercase">
 			Signout
-		</button>
+		</ButtonStyle>
 	);
 }
 
 export default SignOut;
+
+const ButtonStyle = styled.button`
+	border: none;
+	background: transparent;
+	font-size: 1.6rem;
+	text-transform: uppercase;
+`;
