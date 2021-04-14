@@ -7,6 +7,7 @@ import useUser from "../auth/User";
 import SignOut from "../auth/Signout";
 import CartButton from "../Cart/CartButtom";
 import Cart from "../Cart/Cart";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header() {
 	const user = useUser();
@@ -30,6 +31,7 @@ function Header() {
 							<SignOut />
 						</ButtonStyles>
 						<Cart />
+						<GiHamburgerMenu className="HamburgerMenu" />
 					</div>
 				)}
 				{!user && (
@@ -52,9 +54,19 @@ const HeaderStyles = styled.div`
 	justify-content: space-between;
 	background: var(--gray);
 	position: fixed;
+	/* border: solid red; */
 
 	.btns {
 		display: flex;
+	}
+
+	.HamburgerMenu {
+		font-size: 4rem;
+		margin-right: 5rem;
+		color: white;
+		@media (min-width: 630px) {
+			display: none;
+		}
 	}
 `;
 
@@ -67,6 +79,9 @@ const LogoStyles = styled.h1`
 
 	h1 {
 		font-size: 3.5rem;
+		@media (max-width: 850px) {
+			font-size: 2.2rem;
+		}
 	}
 
 	span {

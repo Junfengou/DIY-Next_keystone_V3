@@ -7,7 +7,7 @@ function CartButton() {
 
 	return (
 		<ButtonStyle type="button" className="uppercase" onClick={toggleCart}>
-			Cart
+			<p>Cart</p>
 		</ButtonStyle>
 	);
 }
@@ -19,4 +19,10 @@ const ButtonStyle = styled.button`
 	background: transparent;
 	font-size: 1.6rem;
 	text-transform: uppercase;
+
+	@media (max-width: 1000px) {
+		p {
+			font-size: 1.3rem;
+		}
+	}
 `;

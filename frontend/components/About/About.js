@@ -58,9 +58,6 @@ const AboutStyles = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 17rem;
-	@media (max-width: 700px) {
-		height: 70em;
-	}
 `;
 
 const Bio = styled.div`
@@ -138,6 +135,13 @@ const LocationStyles = styled.div`
 		img {
 			height: 20rem;
 			object-fit: contain;
+		}
+
+		@media (max-width: 500px) {
+			img {
+				height: 15rem;
+				object-fit: contain;
+			}
 		}
 	}
 

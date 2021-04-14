@@ -17,7 +17,7 @@ function SignOut() {
 
 	return (
 		<ButtonStyle type="button" onClick={signout} className="uppercase">
-			Signout
+			<p>Signout</p>
 		</ButtonStyle>
 	);
 }
@@ -29,4 +29,10 @@ const ButtonStyle = styled.button`
 	background: transparent;
 	font-size: 1.6rem;
 	text-transform: uppercase;
+
+	@media (max-width: 1000px) {
+		p {
+			font-size: 1.3rem;
+		}
+	}
 `;

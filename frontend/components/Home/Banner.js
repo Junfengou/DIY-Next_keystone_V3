@@ -45,7 +45,6 @@ const BannerStyles = styled.div`
 	h3 {
 		font-size: 3rem;
 		color: white;
-		z-index: 2;
 	}
 
 	button {

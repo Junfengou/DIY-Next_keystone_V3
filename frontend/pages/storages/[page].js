@@ -1,3 +1,3 @@
-import StoragePage from "./index";
+import StoragePage from "../storages";
 
 export default StoragePage;

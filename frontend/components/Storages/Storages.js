@@ -32,9 +32,10 @@ function Storages({ page }) {
 	return (
 		<StorageStyles>
 			{/* Reserved spot for pagination if needed */}
-			<>
+			<div className="pagination">
+				<h3>Reserve your own storage today!</h3>
 				<Pagination page={page || 1} />
-			</>
+			</div>
 			<div className="contents">
 				<div className="sideBar">
 					<Location />
@@ -60,8 +61,15 @@ const StorageStyles = styled.div`
 	grid-template-rows: max-content 1fr;
 	justify-items: center;
 	align-items: center;
-	height: 100vh;
 	padding-top: 10rem;
+
+	.pagination {
+		display: grid;
+		grid-template-rows: repeat(2, 1fr);
+		grid-template-columns: 1fr;
+		justify-items: center;
+		align-items: center;
+	}
 
 	.contents {
 		display: flex;
@@ -73,6 +81,10 @@ const StorageStyles = styled.div`
 			display: flex;
 			flex-direction: column;
 			gap: 1rem;
+		}
+
+		@media (max-width: 1000px) {
+			flex-direction: column;
 		}
 	}
 `;

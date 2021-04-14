@@ -14,7 +14,17 @@ const ButtonStyles = styled.div`
 	border-right: 1px solid black;
 	cursor: pointer;
 
-	@media (max-width: 700px) {
+	@media (max-width: 1000px) {
+		/* display: none; */
+		width: 12rem;
+		/* border: solid red; */
+	}
+
+	@media (max-width: 670px) {
+		width: 10rem;
+	}
+
+	@media (max-width: 630px) {
 		display: none;
 	}
 `;

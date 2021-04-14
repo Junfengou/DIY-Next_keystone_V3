@@ -11,7 +11,20 @@ const NavStyles = styled.div`
 	max-width: 500px;
 	min-width: 300px;
 
-	@media (max-width: 740px) {
+	@media (max-width: 1000px) {
+		/* display: none; */
+		a {
+			font-size: 1.5rem;
+		}
+	}
+
+	@media (max-width: 670px) {
+		a {
+			font-size: 1.3rem;
+		}
+	}
+
+	@media (max-width: 630px) {
 		display: none;
 	}
 `;
