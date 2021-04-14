@@ -14,6 +14,15 @@ function RentalStateProvider({ children }) {
 	const [rentalPrice, setRentalPrice] = useState([]);
 	const [unit, setUnit] = useState([]);
 	const [cartOpen, setCartOpen] = useState(false);
+	const [click, setClick] = useState(false);
+
+	function openMobileMenu() {
+		setClick(!click);
+	}
+
+	function closeMobileMenu() {
+		setClick(false);
+	}
 
 	// This function makes sure that there is no duplicates, verify by id
 	function grabUnit(id, price, unitType, unitNum) {
@@ -89,6 +98,9 @@ function RentalStateProvider({ children }) {
 				closeCart,
 				cartOpen,
 				deleteUnit,
+				click,
+				openMobileMenu,
+				closeMobileMenu,
 			}}
 		>
 			{children}

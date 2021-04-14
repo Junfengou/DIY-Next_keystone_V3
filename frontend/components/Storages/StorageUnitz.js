@@ -18,13 +18,13 @@ function StorageUnitz({ item }) {
 			<div className="tagFooter">
 				<h4>Unit #{unitType.unitNum}</h4>
 				{/* <h4>{unitType.availability}</h4> */}
-				<SickButton
+				<button
 					onClick={() =>
 						grabUnit(id, unitType.price, storageUnitType, unitType.unitNum)
 					}
 				>
 					Reserve
-				</SickButton>
+				</button>
 			</div>
 		</StorageUnitStyles>
 	);
@@ -53,5 +53,17 @@ const StorageUnitStyles = styled.div`
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
+	}
+
+	button {
+		background: var(--orange);
+		color: black;
+		font-weight: 500;
+		border: 0;
+		border-radius: 0;
+		text-transform: uppercase;
+		font-size: 1rem;
+		padding: 0.8rem 1rem;
+		/* transform: skew(-2deg); */
 	}
 `;

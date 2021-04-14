@@ -8,9 +8,13 @@ import SignOut from "../auth/Signout";
 import CartButton from "../Cart/CartButtom";
 import Cart from "../Cart/Cart";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { GiCrossedBones } from "react-icons/gi";
+import { userRental } from "../../lib/RentalState";
+import MobileMenu from "./MobileMenu";
 
 function Header() {
 	const user = useUser();
+	const { click, openMobileMenu, closeMobileMenu } = userRental();
 	return (
 		<NavStyles>
 			<HeaderStyles>
@@ -31,13 +35,30 @@ function Header() {
 							<SignOut />
 						</ButtonStyles>
 						<Cart />
-						<GiHamburgerMenu className="HamburgerMenu" />
+						<MobileMenu />
+						<div onClick={openMobileMenu}>
+							{click ? (
+								<GiCrossedBones className="HamburgerMenu" />
+							) : (
+								<GiHamburgerMenu className="HamburgerMenu" />
+							)}
+						</div>
 					</div>
 				)}
 				{!user && (
-					<Link href="/signin">
-						<ButtonStyles>SIGNIN</ButtonStyles>
-					</Link>
+					<>
+						<MobileMenu />
+						<div onClick={openMobileMenu}>
+							{click ? (
+								<GiCrossedBones className="HamburgerMenu" />
+							) : (
+								<GiHamburgerMenu className="HamburgerMenu" />
+							)}
+						</div>
+						<Link href="/signin">
+							<ButtonStyles>SIGNIN</ButtonStyles>
+						</Link>
+					</>
 				)}
 			</HeaderStyles>
 		</NavStyles>
@@ -61,8 +82,9 @@ const HeaderStyles = styled.div`
 	}
 
 	.HamburgerMenu {
-		font-size: 4rem;
-		margin-right: 5rem;
+		font-size: 3rem;
+		margin-top: 1rem;
+		margin-right: 3rem;
 		color: white;
 		@media (min-width: 630px) {
 			display: none;

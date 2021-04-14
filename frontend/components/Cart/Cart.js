@@ -40,8 +40,7 @@ const ADD_RENTAL_MUTATION = gql`
 `;
 
 function Cart() {
-	const { rental, rentalPrice, unit, emptyCart } = userRental();
-	const { cartOpen, toggleCart } = userRental();
+	const { rental, rentalPrice, unit, cartOpen, toggleCart } = userRental();
 	const [startDate, setStartDate] = useState(new Date());
 	const [month, setMonth] = useState("");
 	const [day, setDay] = useState("");
