@@ -8,6 +8,7 @@ const UsernameStyles = styled.h1`
 	transform: skew(-10deg);
 	margin: 0;
 	font-size: 2rem;
+	z-index: 2;
 `;
 
 export default UsernameStyles;

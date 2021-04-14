@@ -4,9 +4,11 @@ import styled from "styled-components";
 function thankyou() {
 	return (
 		<ThankYouStyles>
-			<h1>
-				Thank you for your rental request! The owner will contact you shortly
-			</h1>
+			<div className="msg">
+				<h3>
+					Thank you for your rental request! The owner will contact you shortly
+				</h3>
+			</div>
 		</ThankYouStyles>
 	);
 }
@@ -18,4 +20,20 @@ const ThankYouStyles = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	.msg {
+		padding: 2rem;
+
+		@media (max-width: 1000px) {
+			h3 {
+				font-size: 1.3rem;
+			}
+		}
+
+		@media (max-width: 700px) {
+			h3 {
+				font-size: 1.1rem;
+			}
+		}
+	}
 `;

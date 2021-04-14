@@ -10,7 +10,7 @@ import Cart from "../Cart/Cart";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { GiCrossedBones } from "react-icons/gi";
 import { userRental } from "../../lib/RentalState";
-import MobileMenu from "./MobileMenu";
+import MobileNav from "./MobileNav";
 
 function Header() {
 	const user = useUser();
@@ -35,7 +35,7 @@ function Header() {
 							<SignOut />
 						</ButtonStyles>
 						<Cart />
-						<MobileMenu />
+						<MobileNav />
 						<div onClick={openMobileMenu}>
 							{click ? (
 								<GiCrossedBones className="HamburgerMenu" />
@@ -47,7 +47,7 @@ function Header() {
 				)}
 				{!user && (
 					<>
-						<MobileMenu />
+						<MobileNav />
 						<div onClick={openMobileMenu}>
 							{click ? (
 								<GiCrossedBones className="HamburgerMenu" />

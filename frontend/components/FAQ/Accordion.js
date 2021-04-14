@@ -3,6 +3,60 @@ import styled from "styled-components";
 import data from "../../questions.json";
 import { BsArrowBarDown, BsArrowBarUp } from "react-icons/bs";
 
+function Accordion() {
+	let indexPlus;
+
+	const [active, setActive] = useState(0);
+
+	const eventHandler = (e, index) => {
+		e.preventDefault();
+		setActive(index);
+	};
+
+	const indexCount = (index) => {
+		indexPlus = index + 1;
+		return indexPlus;
+	};
+
+	return (
+		<AccordionWrapper>
+			<AccordionFormStyles>
+				{data.map((item, index) => (
+					<div key={index}>
+						<h3>
+							<button
+								onClick={(e) => eventHandler(e, index)}
+								className={active === index ? "active" : "inactive"}
+								aria-expanded={active === index ? "true" : "false"}
+								aria-controls={"sect-" + indexCount(index)}
+								aria-disabled={active === index ? "true" : "false"}
+								tabIndex={indexCount(index)}
+							>
+								<h1 className="title-wrapper">
+									{item.question}
+									{active === index ? (
+										<BsArrowBarUp className="arrow-up" />
+									) : (
+										<BsArrowBarDown className="arrow-down" />
+									)}
+								</h1>
+							</button>
+						</h3>
+						<div
+							id={"sect-" + indexCount(index)}
+							className={active === index ? "panel-open" : "panel-close"}
+						>
+							<p>{item.answer}</p>
+						</div>
+					</div>
+				))}
+			</AccordionFormStyles>
+		</AccordionWrapper>
+	);
+}
+
+export default Accordion;
+
 const AccordionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -13,6 +67,7 @@ const AccordionWrapper = styled.div`
 
 const AccordionFormStyles = styled.form`
 	max-width: 1000px;
+
 	/* border: solid red; */
 
 	h1 {
@@ -53,6 +108,8 @@ const AccordionFormStyles = styled.form`
 		align-items: center;
 		position: relative;
 		width: 100%;
+		z-index: 0 !important;
+		overflow: hidden;
 	}
 
 	.arrow-up,
@@ -110,57 +167,3 @@ const AccordionFormStyles = styled.form`
 		}
 	}
 `;
-
-function Accordion() {
-	let indexPlus;
-
-	const [active, setActive] = useState(0);
-
-	const eventHandler = (e, index) => {
-		e.preventDefault();
-		setActive(index);
-	};
-
-	const indexCount = (index) => {
-		indexPlus = index + 1;
-		return indexPlus;
-	};
-
-	return (
-		<AccordionWrapper>
-			<AccordionFormStyles>
-				{data.map((item, index) => (
-					<div key={index}>
-						<h3>
-							<button
-								onClick={(e) => eventHandler(e, index)}
-								className={active === index ? "active" : "inactive"}
-								aria-expanded={active === index ? "true" : "false"}
-								aria-controls={"sect-" + indexCount(index)}
-								aria-disabled={active === index ? "true" : "false"}
-								tabIndex={indexCount(index)}
-							>
-								<h1 className="title-wrapper">
-									{item.question}
-									{active === index ? (
-										<BsArrowBarUp className="arrow-up" />
-									) : (
-										<BsArrowBarDown className="arrow-down" />
-									)}
-								</h1>
-							</button>
-						</h3>
-						<div
-							id={"sect-" + indexCount(index)}
-							className={active === index ? "panel-open" : "panel-close"}
-						>
-							<p>{item.answer}</p>
-						</div>
-					</div>
-				))}
-			</AccordionFormStyles>
-		</AccordionWrapper>
-	);
-}
-
-export default Accordion;

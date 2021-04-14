@@ -5,7 +5,7 @@ import { userRental } from "../../lib/RentalState";
 import SignOut from "../auth/Signout";
 import useUser from "../auth/User";
 
-function MobileMenu() {
+function MobileNav() {
 	const { click, closeMobileMenu } = userRental();
 	const user = useUser();
 	return (
@@ -32,7 +32,7 @@ function MobileMenu() {
 					</div>
 
 					<div className="btn">
-						<Link href="/storages">
+						<Link href="/cart">
 							<div onClick={closeMobileMenu}>Cart</div>
 						</Link>
 					</div>
@@ -42,7 +42,7 @@ function MobileMenu() {
 	);
 }
 
-export default MobileMenu;
+export default MobileNav;
 
 const MobileMenuStyles = styled.div`
 	align-items: center;
@@ -59,7 +59,6 @@ const MobileMenuStyles = styled.div`
 	transform: translateX(-100%);
 	transition: all 1s;
 	box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
-	z-index: 5;
 	display: grid;
 	justify-items: center;
 	align-items: center;
@@ -75,6 +74,8 @@ const MobileMenuStyles = styled.div`
 		grid-template-rows: auto;
 		justify-items: center;
 		align-items: center;
+		position: relative;
+		z-index: 10000 !important;
 	}
 
 	.btnCollection {
