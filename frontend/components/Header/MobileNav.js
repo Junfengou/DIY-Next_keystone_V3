@@ -66,6 +66,7 @@ const MobileMenuStyles = styled.div`
 	overflow-x: hidden;
 	overflow-y: hidden;
 	${(props) => props.open && `transform: translateX(0);`};
+	z-index: 10000 !important;
 
 	.container {
 		width: 60%;
@@ -74,8 +75,7 @@ const MobileMenuStyles = styled.div`
 		grid-template-rows: auto;
 		justify-items: center;
 		align-items: center;
-		position: relative;
-		z-index: 10000 !important;
+		position: fixed;
 	}
 
 	.btnCollection {

@@ -26,13 +26,13 @@ const ThankYouStyles = styled.div`
 
 		@media (max-width: 1000px) {
 			h3 {
-				font-size: 1.3rem;
+				font-size: 1.5rem;
 			}
 		}
 
 		@media (max-width: 700px) {
 			h3 {
-				font-size: 1.1rem;
+				font-size: 1.3rem;
 			}
 		}
 	}

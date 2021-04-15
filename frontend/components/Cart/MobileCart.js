@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { forwardRef, useState } from "react";
 import styled from "styled-components";
 import { userRental } from "../../lib/RentalState";
 import gql from "graphql-tag";
@@ -80,6 +80,7 @@ function MobileCart() {
 							<h4>Move in date:</h4>
 							<DatePicker
 								selected={startDate}
+								className="datepicker"
 								onChange={(date) => {
 									setStartDate(date);
 									const pickedDate = date.toString().split(" ");
@@ -87,6 +88,7 @@ function MobileCart() {
 									setDay(pickedDate[2]);
 									setYear(pickedDate[3]);
 								}}
+								closeOnScroll={true}
 							/>
 							<SickButton type="submit">Request Rental</SickButton>
 						</div>
@@ -167,7 +169,7 @@ const MobileCartStyles = styled.div`
 		font-size: 2rem;
 	}
 
-	.react-datepicker-popper {
+	/* .react-datepicker-popper {
 		z-index: 1 !important;
-	}
+	} */
 `;
