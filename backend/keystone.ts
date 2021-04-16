@@ -7,10 +7,12 @@ import { Rental } from "./schemas/Rental";
 import { RentalList } from "./schemas/RentalList";
 import { StorageUnit } from "./schemas/StorageUnit";
 import { StorageUnitType } from "./schemas/StorageUnitType";
+import { Role } from "./schemas/Role";
 
 import 'dotenv/config';
 // import { extendGraphqlSchema } from './mutations';
 import { insertSeedData } from './seed-data';
+import { permissionsList } from './schemas/fields';
 
 const databaseURL =
   process.env.DATABASE_URL || 'mongodb://localhost/keystone-sick-fits-tutorial';
@@ -53,7 +55,7 @@ config({
   },
   lists: createSchema({
     // Schema items go in here
-    User, Employee, Rental, RentalList, StorageUnit, StorageUnitType
+    User, Employee, Rental, RentalList, StorageUnit, StorageUnitType, Role
   }),
     
   // extendGraphqlSchema,
@@ -66,9 +68,11 @@ config({
       return !!session?.data;
     },
   },
-  // TODO: Add session values here
+
+  // Think of this as GraphQL Query
+  // Query currently authenticated User. As long as there's space in between, the query will run
   session: withItemData(statelessSessions(sessionConfig), {
-    User: `id`
+    User: `id role {${permissionsList.join(" ")}}`
   })
 }));
 

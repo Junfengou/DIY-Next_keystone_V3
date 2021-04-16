@@ -46,7 +46,7 @@ function Header() {
 					</div>
 				)}
 				{!user && (
-					<>
+					<div>
 						<MobileNav />
 						<div onClick={openMobileMenu}>
 							{click ? (
@@ -58,7 +58,7 @@ function Header() {
 						<Link href="/signin">
 							<ButtonStyles>SIGNIN</ButtonStyles>
 						</Link>
-					</>
+					</div>
 				)}
 			</HeaderStyles>
 		</NavStyles>

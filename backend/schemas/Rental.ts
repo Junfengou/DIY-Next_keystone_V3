@@ -1,10 +1,16 @@
 import { list } from "@keystone-next/keystone/schema";
 import { text, password, integer, select, relationship} from "@keystone-next/fields";
-
+import { isSignedIn, permissions, rules } from "../access";
 
 export const Rental = list({
+    access: {
+        create: isSignedIn, // Every user should be able to create a rental
+        read: isSignedIn, 
+        update: permissions.canManageRental,
+        delete: permissions.canManageRental,
+      },
     ui: {
-        labelField: "name"
+        labelField: "name",
     },
     fields: {
         paymentAmount: integer(),

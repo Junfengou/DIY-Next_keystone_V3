@@ -81,7 +81,7 @@ function SignIn() {
 						/>
 						<div className="btn">
 							<button type="submit">Sign In</button>
-							<Link href="/recover">
+							<Link href="/signup">
 								<button>Join us today!</button>
 							</Link>
 						</div>

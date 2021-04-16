@@ -10,34 +10,60 @@ function MobileNav() {
 	const user = useUser();
 	return (
 		<MobileMenuStyles open={click}>
-			<div className="container">
-				<Link href="/about">
-					<div onClick={closeMobileMenu}>About</div>
-				</Link>
-				<Link href="/faq">
-					<div onClick={closeMobileMenu}>FAQ</div>
-				</Link>
-				<Link href="/storages">
-					<div onClick={closeMobileMenu}>Storages</div>
-				</Link>
-				<div className="btnCollection">
-					<div className="btn">
-						{!user ? (
-							<Link href="/signin">
-								<div>SIGNIN</div>
-							</Link>
-						) : (
-							<SignOut />
-						)}
-					</div>
+			{user && (
+				<div className="container">
+					<Link href="/about">
+						<div onClick={closeMobileMenu}>About</div>
+					</Link>
+					<Link href="/faq">
+						<div onClick={closeMobileMenu}>FAQ</div>
+					</Link>
+					<Link href="/storages">
+						<div onClick={closeMobileMenu}>Storages</div>
+					</Link>
+					<div className="btnCollection">
+						<div className="btn">
+							{!user ? (
+								<Link href="/signin">
+									<div>SIGNIN</div>
+								</Link>
+							) : (
+								<SignOut />
+							)}
+						</div>
 
-					<div className="btn">
-						<Link href="/cart">
-							<div onClick={closeMobileMenu}>Cart</div>
-						</Link>
+						<div className="btn">
+							<Link href="/cart">
+								<div onClick={closeMobileMenu}>Cart</div>
+							</Link>
+						</div>
 					</div>
 				</div>
-			</div>
+			)}
+			{!user && (
+				<div className="container">
+					<Link href="/about">
+						<div onClick={closeMobileMenu}>About</div>
+					</Link>
+					<Link href="/faq">
+						<div onClick={closeMobileMenu}>FAQ</div>
+					</Link>
+					<Link href="/storages">
+						<div onClick={closeMobileMenu}>Storages</div>
+					</Link>
+					<div className="btnCollection">
+						<div className="btn">
+							{!user ? (
+								<Link href="/signin">
+									<div>SIGNIN</div>
+								</Link>
+							) : (
+								<SignOut />
+							)}
+						</div>
+					</div>
+				</div>
+			)}
 		</MobileMenuStyles>
 	);
 }

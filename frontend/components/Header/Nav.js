@@ -1,6 +1,30 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import useUser from "../auth/User";
+
+function Nav() {
+	const user = useUser();
+	return (
+		<NavStyles>
+			{user ? (
+				<>
+					<Link href="/about">About</Link>
+					<Link href="/faq">FAQ</Link>
+					<Link href="/storages">Storages</Link>
+					<Link href="/account">Profile</Link>
+				</>
+			) : (
+				<>
+					<Link href="/about">About</Link>
+					<Link href="/faq">FAQ</Link>
+				</>
+			)}
+		</NavStyles>
+	);
+}
+
+export default Nav;
 
 const NavStyles = styled.div`
 	/* border: solid blue; */
@@ -28,15 +52,3 @@ const NavStyles = styled.div`
 		display: none;
 	}
 `;
-
-function Nav() {
-	return (
-		<NavStyles>
-			<Link href="/about">About</Link>
-			<Link href="/faq">FAQ</Link>
-			<Link href="/storages">Storages</Link>
-		</NavStyles>
-	);
-}
-
-export default Nav;

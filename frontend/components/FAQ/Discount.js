@@ -10,7 +10,7 @@ function Discount() {
 			<div className="reserve">
 				<h1>Reserve Your Own Storage Unit Today!</h1>
 				{user && (
-					<Link href="/reserve">
+					<Link href="/storages">
 						<button>Reserve</button>
 					</Link>
 				)}
