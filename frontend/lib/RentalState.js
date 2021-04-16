@@ -42,27 +42,22 @@ function RentalStateProvider({ children }) {
 				.reduce((map, obj) => map.set(obj.unitNum, obj), new Map())
 				.values(),
 		]);
+		// setLocalStorageItems(id);
 	}
 
 	function deleteUnit(id) {
 		filterItem(setRental, rental, id);
 		filterItem(setRentalPrice, rentalPrice, id);
 		filterItem(setUnit, unit, id);
-		// setRental(
-		// 	rental.filter((item) => {
-		// 		return item.id != id;
-		// 	})
-		// );
-		// setRentalPrice(
-		// 	rentalPrice.filter((item) => {
-		// 		return item.id != id;
-		// 	})
-		// );
-		// setUnit(
-		// 	unit.filter((item) => {
-		// 		return item.id != id;
-		// 	})
-		// );
+	}
+
+	// Look into this in the future. The array of item are successfully stored in the LocalStorage
+	// Problem: The array will reset after refresh, causing the cart to lose all the data.
+	// Potential solution: I can create a DB to store all current items...maybe I'll do that
+	function setLocalStorageItems(id) {
+		var storages = JSON.parse(localStorage.getItem("storages") || "[]");
+		storages.push({ id });
+		localStorage.setItem("storages", JSON.stringify(storages));
 	}
 
 	function filterItem(setLoopyLoop, loopyArr, id) {
@@ -75,7 +70,6 @@ function RentalStateProvider({ children }) {
 
 	function toggleCart() {
 		setCartOpen(!cartOpen);
-		console.log("hmm");
 	}
 
 	function closeCart() {
@@ -101,6 +95,7 @@ function RentalStateProvider({ children }) {
 				click,
 				openMobileMenu,
 				closeMobileMenu,
+				setLocalStorageItems,
 			}}
 		>
 			{children}

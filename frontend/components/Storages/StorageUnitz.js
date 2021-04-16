@@ -5,7 +5,7 @@ import SickButton from "../styles/SickButton";
 
 function StorageUnitz({ item }) {
 	const { storageUnitType, unitType, id } = item;
-	const { grabUnit } = userRental();
+	const { grabUnit, setLocalStorageItems, rental } = userRental();
 	return (
 		<StorageUnitStyles>
 			<div className="tagHeader">
