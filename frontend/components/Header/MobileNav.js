@@ -23,18 +23,12 @@ function MobileNav() {
 					</Link>
 					<div className="btnCollection">
 						<div className="btn">
-							{!user ? (
-								<Link href="/signin">
-									<div>SIGNIN</div>
-								</Link>
-							) : (
-								<SignOut />
-							)}
+							<SignOut />
 						</div>
 
-						<div className="btn">
+						<div className="btn" onClick={closeMobileMenu}>
 							<Link href="/cart">
-								<div onClick={closeMobileMenu}>Cart</div>
+								<div>Cart</div>
 							</Link>
 						</div>
 					</div>
@@ -48,18 +42,12 @@ function MobileNav() {
 					<Link href="/faq">
 						<div onClick={closeMobileMenu}>FAQ</div>
 					</Link>
-					<Link href="/storages">
-						<div onClick={closeMobileMenu}>Storages</div>
-					</Link>
+
 					<div className="btnCollection">
 						<div className="btn">
-							{!user ? (
-								<Link href="/signin">
-									<div>SIGNIN</div>
-								</Link>
-							) : (
-								<SignOut />
-							)}
+							<Link href="/signin">
+								<div onClick={closeMobileMenu}>SIGNIN</div>
+							</Link>
 						</div>
 					</div>
 				</div>

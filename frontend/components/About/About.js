@@ -1,52 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import Banner from "../Home/Banner";
 
 function About() {
 	return (
-		<AboutStyles>
-			<Bio>
-				<div className="photo">
-					<img
-						src="https://res.cloudinary.com/junworks/image/upload/v1614618234/DIY%20Garage/Person_qkxrzy.png"
-						alt="photo"
-					/>
-				</div>
-				<div className="bio">
-					<h1>
-						Hi! My name is <span>Kirk</span>!
-					</h1>
-					<p>
-						Raised here in Elkhorn we are proud to do business in this thriving
-						well grounded mid-west community. We are certain we will provide the
-						customer service you expect from a small town business.
-						<br />
-						Let us prove it to you!
-					</p>
-				</div>
-			</Bio>
+		<>
+			<Banner />
 
-			<LocationStyles>
-				<div className="about">
-					<p>
-						22101 West Maple Rd
-						<br />
-						Omaha, NE 68022
-						<br />
-						Phone: 402-289-5099
-						<br />
-						diystorage@yahoo.com
-						<br />
-						Hours: Mon - Fri: 8AM - 5PM | Sat: 9AM - 2PM
-					</p>
-				</div>
-				<div className="location">
-					<img
-						src="https://res.cloudinary.com/junworks/image/upload/v1614618238/DIY%20Garage/omaha_qmd9dd.png"
-						alt="omaha"
-					/>
-				</div>
-			</LocationStyles>
-		</AboutStyles>
+			<AboutStyles>
+				<Bio>
+					<div className="photo">
+						<img
+							src="https://res.cloudinary.com/junworks/image/upload/v1614618234/DIY%20Garage/Person_qkxrzy.png"
+							alt="photo"
+						/>
+					</div>
+					<div className="bio">
+						<h1>
+							Hi! My name is <span>Kirk</span>!
+						</h1>
+						<p>
+							Raised here in Elkhorn we are proud to do business in this
+							thriving well grounded mid-west community. We are certain we will
+							provide the customer service you expect from a small town
+							business.
+							<br />
+							Let us prove it to you!
+						</p>
+					</div>
+				</Bio>
+
+				<LocationStyles>
+					<div className="about">
+						<p>
+							22101 West Maple Rd
+							<br />
+							Omaha, NE 68022
+							<br />
+							Phone: 402-289-5099
+							<br />
+							diystorage@yahoo.com
+							<br />
+							Hours: Mon - Fri: 8AM - 5PM | Sat: 9AM - 2PM
+						</p>
+					</div>
+					<div className="location">
+						<img
+							src="https://res.cloudinary.com/junworks/image/upload/v1614618238/DIY%20Garage/omaha_qmd9dd.png"
+							alt="omaha"
+						/>
+					</div>
+				</LocationStyles>
+			</AboutStyles>
+		</>
 	);
 }
 

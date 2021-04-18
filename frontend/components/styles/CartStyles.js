@@ -65,6 +65,10 @@ const CartStyles = styled.div`
 		width: 100%;
 		border: solid 1px var(--orange);
 	}
+	.hmm {
+		border: solid red;
+		height: 100vh;
+	}
 `;
 
 export default CartStyles;

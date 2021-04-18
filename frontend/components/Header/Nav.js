@@ -12,7 +12,6 @@ function Nav() {
 					<Link href="/about">About</Link>
 					<Link href="/faq">FAQ</Link>
 					<Link href="/storages">Storages</Link>
-					<Link href="/account">Profile</Link>
 				</>
 			) : (
 				<>

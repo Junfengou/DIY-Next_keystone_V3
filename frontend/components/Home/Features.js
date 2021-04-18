@@ -79,12 +79,11 @@ function Features() {
 export default Features;
 
 const FeatureStyles = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	display: grid;
+	grid-template-rows: max-content, 1fr;
+	justify-items: center;
 	align-items: center;
-	margin: 5rem;
-	padding: 2rem;
+	padding: 5rem 0;
 
 	h2 {
 		font-size: 3rem;
@@ -109,12 +108,12 @@ const FeatureStyles = styled.div`
 
 const Card = styled.div`
 	max-width: 1000px;
-	/* border: solid red; */
 	height: 100%;
 	display: grid;
 	justify-content: space-evenly;
 	align-items: center;
 	margin: 8rem;
+	gap: 2rem;
 
 	@media (max-width: 1130px) {
 		width: 100% !important;

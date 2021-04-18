@@ -3,6 +3,7 @@ import styled from "styled-components";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import { CURRENT_USER_QUERY } from "./User";
+import { userRental } from "../../lib/RentalState";
 
 const SIGNOUT_MUTATION = gql`
 	mutation {
