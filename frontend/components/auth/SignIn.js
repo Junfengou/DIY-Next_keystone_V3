@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import Form from "../styles/Form";
-import useForm from "../../lib/useForm";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import Error from "../ErrorMessage";
 import { CURRENT_USER_QUERY } from "./User";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const SIGNIN_MUTATION = gql`
 	mutation SIGNIN_MUTATION($email: String!, $password: String!) {
@@ -27,15 +25,11 @@ const SIGNIN_MUTATION = gql`
 `;
 
 function SignIn() {
-	const { input, handleChange, resetForm } = useForm({
-		email: "",
-		password: "",
-	});
-
+	const [currentState, setCurrentState] = useState({});
 	const [authenticateUserWithPassword, { loading, data }] = useMutation(
 		SIGNIN_MUTATION,
 		{
-			variables: input,
+			variables: currentState,
 			refetchQueries: [{ query: CURRENT_USER_QUERY }],
 		}
 	);
@@ -55,39 +49,82 @@ function SignIn() {
 
 	return (
 		<AuthStyles>
-			<div className="authBubble">
-				{/* method="POST" prevent input from going into the browser history / url [security issue] */}
-				<Form method="POST" onSubmit={handleSubmit}>
-					<Error error={error} />
-					<h1>Sign In</h1>
-					<fieldset disabled={loading}>
-						<label>Email</label>
-						<input
-							type="email"
-							name="email"
-							placeholder="Email"
-							autoComplete="email"
-							value={input.email}
-							onChange={handleChange}
-						/>
+			<header className="baseFormHeader">
+				<h1 className="baseFormHeading">Sign in</h1>
+			</header>
+			<Formik
+				initialValues={{ email: "", password: "" }}
+				validate={(values) => {
+					const errors = {};
+					const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+					const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/;
 
-						<label>Password</label>
-						<input
-							type="password"
-							name="password"
-							placeholder="Password"
-							value={input.password}
-							onChange={handleChange}
-						/>
-						<div className="btn">
-							<button type="submit">Sign In</button>
-							<Link href="/signup">
-								<button>Join us today!</button>
-							</Link>
+					if (!values.email) {
+						errors.email = `Email required* `;
+					} else if (!emailRegex.test(values.email)) {
+						errors.email = "Invalid email address";
+					}
+
+					if (!values.password) {
+						errors.password = "Password required*";
+					} else if (values.password.length < 8) {
+						errors.password = "Password must be 8 characters long";
+					} else if (!passwordRegex.test(values.password)) {
+						errors.password =
+							"Invalid password. Must contain one number, one lower case, and one uppercase, and one symbol.";
+					}
+
+					return errors;
+				}}
+				onSubmit={(values, { setSubmitting }) => {
+					setSubmitting(true);
+					setCurrentState(values);
+					authenticateUserWithPassword();
+					console.log(values);
+					setSubmitting(false);
+				}}
+			>
+				{({ isSubmitting }) => (
+					<Form className="baseForm">
+						<div className="formFieldWrap">
+							<label>Email</label>
+							<div className="formFieldWrapInner">
+								<Field type="email" name="email" className="field" />
+							</div>
+							<ErrorMessage name="email" component="div" className="error" />
 						</div>
-					</fieldset>
-				</Form>
-			</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Password</label>
+							<div className="formFieldWrapInner">
+								<Field type="password" name="password" className="field" />
+							</div>
+							<ErrorMessage name="password" component="div" className="error" />
+						</div>
+
+						<div className="btnCollection">
+							<button type="submit" disabled={isSubmitting}>
+								Sign In
+							</button>
+
+							<div className="btn">
+								<Link href="/signup">SignUp</Link>
+							</div>
+						</div>
+
+						<h4 className="baseFormHeading">
+							{data?.createUser && (
+								<p>
+									Signed up with {data.createUser.email} - Please go ahead and
+									sign in!
+								</p>
+							)}
+						</h4>
+					</Form>
+				)}
+			</Formik>
 		</AuthStyles>
 	);
 }
@@ -95,39 +132,82 @@ function SignIn() {
 export default SignIn;
 
 export const AuthStyles = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+	margin: 4rem;
+	padding: 3rem 4rem;
+	background-color: white;
+	box-shadow: 0 0 1.5rem rgba(105, 105, 105, 0.5);
+	border-radius: 4px;
+	/* width: 50vw; */
+	min-width: 40vw;
 
-	.authBubble {
-		background: white;
-		/* border: solid red; */
-		/* width: 40rem;
-		height: 40rem; */
-		border-radius: 1rem;
-		padding: 7rem 2rem;
-		max-width: 1100px;
-		min-width: 300px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
+	.baseFormHeading {
+		text-transform: capitalize;
 	}
 
-	.utils {
-		width: 100%;
-		border-radius: 5rem;
-		padding: 1rem;
+	.baseForm {
+		display: grid;
+		row-gap: 2rem;
+	}
+
+	.formFieldWrap {
+		display: grid;
+		grid-template-rows: max-content 1fr max-content max-content;
+
+		.formFieldWrapInner {
+			grid-column: 1/-1;
+			background-color: white;
+			border-radius: 2%;
+			font-size: 1rem;
+			height: 4rem;
+			display: flex;
+			transition: background-color 240ms, box-shadow 240ms;
+
+			.field {
+				width: 80%;
+			}
+		}
+
+		.error {
+			color: red;
+		}
+	}
+
+	.btnCollection {
 		display: flex;
-		justify-content: space-evenly;
+		gap: 2rem;
+	}
+
+	button {
+		height: 5rem;
+		width: 10rem;
+		background: var(--orange);
+		border-radius: 3%;
+		border: none;
+		outline: none;
 	}
 
 	.btn {
 		display: flex;
-		button {
-			float: right;
-			margin-right: 1rem;
+		justify-content: center;
+		align-items: center;
+		padding: 0 1rem;
+		height: 5rem;
+		width: 10rem;
+		background: var(--orange);
+
+		a {
+			text-decoration: none;
+			font-weight: normal;
+		}
+	}
+
+	@media (max-width: 850px) {
+		width: 90vw;
+
+		.baseFormHeader {
+			h1 {
+				font-size: 1.9rem;
+			}
 		}
 	}
 `;

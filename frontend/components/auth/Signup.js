@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import useForm from "../../lib/useForm";
 import Link from "next/link";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import Error from "../ErrorMessage";
-import { CURRENT_USER_QUERY } from "./User";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const SIGNUP_MUTATION = gql`
@@ -61,7 +58,19 @@ function Signup() {
 				)}
 			</header>
 			<Formik
-				initialValues={{ email: "", password: "" }}
+				initialValues={{
+					email: "",
+					password: "",
+					username: "",
+					name: "",
+					address: "",
+					city: "",
+					state: "",
+					zipcode: 0,
+					country: "",
+					phone: "",
+					drlic: "",
+				}}
 				validate={(values) => {
 					const errors = {};
 					const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
