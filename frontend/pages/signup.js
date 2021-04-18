@@ -16,7 +16,6 @@ const SigninPagestyles = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	gap: 2rem;
 	background-color: rgba(240, 164, 50, 0.8);
 
 	@media (max-width: 900px) {

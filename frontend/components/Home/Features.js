@@ -109,6 +109,7 @@ const FeatureStyles = styled.div`
 
 const Card = styled.div`
 	max-width: 1000px;
+	/* border: solid red; */
 	height: 100%;
 	display: grid;
 	justify-content: space-evenly;

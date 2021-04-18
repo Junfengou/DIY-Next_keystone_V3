@@ -52,7 +52,7 @@ function Signup() {
 	return (
 		<SignUpStyles>
 			<header className="baseFormHeader">
-				<h1 className="baseFormHeading">Sign up for an account</h1>
+				<h1 className="baseFormHeading">Sign up form</h1>
 				{data?.createUser && (
 					<p>
 						Signed up with {data.createUser.email} - Please go ahead and sign
@@ -296,7 +296,8 @@ const SignUpStyles = styled.div`
 	background-color: white;
 	box-shadow: 0 0 1.5rem rgba(105, 105, 105, 0.5);
 	border-radius: 4px;
-	width: 35vw;
+	/* width: 50vw; */
+	min-width: 50vw;
 
 	.baseFormHeading {
 		text-transform: capitalize;
@@ -337,7 +338,7 @@ const SignUpStyles = styled.div`
 
 	button {
 		height: 5rem;
-		width: 20%;
+		width: 10rem;
 		background: var(--orange);
 		border-radius: 3%;
 		border: none;
@@ -358,230 +359,14 @@ const SignUpStyles = styled.div`
 			font-weight: normal;
 		}
 	}
-`;
 
-/*
-Old version:
-import React from "react";
-import styled from "styled-components";
-import Form from "../styles/Form";
-import useForm from "../../lib/useForm";
-import Link from "next/link";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
-import Error from "../ErrorMessage";
-import { CURRENT_USER_QUERY } from "./User";
+	@media (max-width: 850px) {
+		width: 90vw;
 
-const SIGNUP_MUTATION = gql`
-	mutation SIGNUP_MUTATION(
-		$username: String!
-		$email: String!
-		$password: String!
-		$name: String!
-		$address: String!
-		$city: String!
-		$state: String!
-		$zipcode: Int!
-		$country: String!
-		$phone: String!
-		$drlic: String!
-	) {
-		createUser(
-			data: {
-				username: $username
-				email: $email
-				password: $password
-				name: $name
-				address: $address
-				city: $city
-				state: $state
-				zipcode: $zipcode
-				country: $country
-				phone: $phone
-				drlic: $drlic
+		.baseFormHeader {
+			h1 {
+				font-size: 1.9rem;
 			}
-		) {
-			username
 		}
 	}
 `;
-
-function Signup() {
-	const { input, handleChange, resetForm } = useForm({
-		username: "",
-		email: "",
-		password: "",
-		name: "",
-		address: "",
-		city: "",
-		state: "",
-		zipcode: 0,
-		phone: "",
-		drlic: "",
-	});
-
-	const [createUser, { loading, data, error }] = useMutation(SIGNUP_MUTATION, {
-		variables: input,
-	});
-
-	console.log(input);
-
-	async function handleSubmit(e) {
-		e.preventDefault();
-
-		await createUser().catch(console.error);
-		resetForm();
-	}
-
-	console.log({ input });
-	return (
-		<SignUpStyles>
-			<div className="signupBubble">
-				method="POST" prevent input from going into the browser history / url [security issue]
-				<Form method="POST" onSubmit={handleSubmit}>
-					<Error error={error} />
-					<h1>Sign Up</h1>
-					<fieldset disabled={loading}>
-						<label>Username</label>
-						<input
-							type="text"
-							name="username"
-							placeholder="username"
-							autoComplete="username"
-							value={input.username}
-							onChange={handleChange}
-						/>
-
-						<label>Email</label>
-						<input
-							type="email"
-							name="email"
-							placeholder="email"
-							autoComplete="email"
-							value={input.email}
-							onChange={handleChange}
-						/>
-
-						<label>Password</label>
-						<input
-							type="password"
-							name="password"
-							placeholder="password"
-							autoComplete="password"
-							value={input.password}
-							onChange={handleChange}
-						/>
-
-						<label>Name</label>
-						<input
-							type="text"
-							name="name"
-							placeholder="name"
-							autoComplete="name"
-							value={input.name}
-							onChange={handleChange}
-						/>
-
-						<label>Address</label>
-						<input
-							type="text"
-							name="address"
-							placeholder="address"
-							autoComplete="address"
-							value={input.address}
-							onChange={handleChange}
-						/>
-
-						<label>City</label>
-						<input
-							type="text"
-							name="city"
-							placeholder="city"
-							autoComplete="city"
-							value={input.city}
-							onChange={handleChange}
-						/>
-
-						<label>State</label>
-						<input
-							type="text"
-							name="state"
-							placeholder="state"
-							autoComplete="state"
-							value={input.state}
-							onChange={handleChange}
-						/>
-
-						<label>Zipcode</label>
-						<input
-							type="number"
-							name="zipcode"
-							placeholder="zipcode"
-							value={input.zipcode}
-							onChange={handleChange}
-						/>
-
-						<label>Country</label>
-						<input
-							type="text"
-							name="country"
-							placeholder="country"
-							autoComplete="country"
-							value={input.country}
-							onChange={handleChange}
-						/>
-
-						<label>Phone</label>
-						<input
-							type="text"
-							name="phone"
-							placeholder="phone"
-							autoComplete="phone"
-							placeholder="(XXX) XXX-XXXX"
-							value={input.phone}
-							onChange={handleChange}
-						/>
-
-						<label>Dr License</label>
-						<input
-							type="text"
-							name="drlic"
-							placeholder="Driver's License"
-							value={input.drlic}
-							onChange={handleChange}
-						/>
-
-						<div className="btn">
-							<button type="submit">Sign Up</button>
-							<Link href="/signin">
-								<button>Login</button>
-							</Link>
-						</div>
-					</fieldset>
-				</Form>
-			</div>
-		</SignUpStyles>
-	);
-}
-
-export default Signup;
-
-const SignUpStyles = styled.div`
-	width: 45%;
-	max-width: 900px;
-
-	.signupBubble {
-		margin: 6rem 3rem;
-		border-radius: 1rem;
-		background: white;
-	}
-
-	.btn {
-		display: flex;
-		gap: 2rem;
-		padding: 2rem 0;
-	}
-`;
-
-
-*/
