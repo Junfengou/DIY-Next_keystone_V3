@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import styled from "styled-components";
 import useForm from "../../lib/useForm";
-import styled, { keyframes } from "styled-components";
 import Link from "next/link";
 import gql from "graphql-tag";
-import Error from "../ErrorMessage";
 import { useMutation } from "@apollo/client";
+import Error from "../ErrorMessage";
+import { CURRENT_USER_QUERY } from "./User";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const SIGNUP_MUTATION = gql`
 	mutation SIGNUP_MUTATION(
@@ -15,7 +17,8 @@ const SIGNUP_MUTATION = gql`
 		$address: String!
 		$city: String!
 		$state: String!
-		$zipcode: Int
+		$zipcode: Int!
+		$country: String!
 		$phone: String!
 		$drlic: String!
 	) {
@@ -29,6 +32,371 @@ const SIGNUP_MUTATION = gql`
 				city: $city
 				state: $state
 				zipcode: $zipcode
+				country: $country
+				phone: $phone
+				drlic: $drlic
+			}
+		) {
+			username
+			email
+		}
+	}
+`;
+
+function Signup() {
+	const [currentState, setCurrentState] = useState({});
+	const [createUser, { loading, data, error }] = useMutation(SIGNUP_MUTATION, {
+		variables: currentState,
+	});
+
+	return (
+		<SignUpStyles>
+			<header className="baseFormHeader">
+				<h1 className="baseFormHeading">Sign up for an account</h1>
+				{data?.createUser && (
+					<p>
+						Signed up with {data.createUser.email} - Please go ahead and sign
+						in!
+					</p>
+				)}
+			</header>
+			<Formik
+				initialValues={{ email: "", password: "" }}
+				validate={(values) => {
+					const errors = {};
+					const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+					const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/;
+					const addressRegex = /(\d{1,}) [a-zA-Z0-9\s]+(\.)? [a-zA-Z]+(\,)?/;
+					const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+					const zipcodeRegex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+					const driverLicRegex = /H[0-9]{8}/gi;
+
+					if (!values.email) {
+						errors.email = `Email required* `;
+					} else if (!emailRegex.test(values.email)) {
+						errors.email = "Invalid email address";
+					}
+
+					if (!values.password) {
+						errors.password = "Password required*";
+					} else if (values.password.length < 8) {
+						errors.password = "Password must be 8 characters long";
+					} else if (!passwordRegex.test(values.password)) {
+						errors.password =
+							"Invalid password. Must contain one number, one lower case, and one uppercase, and one symbol.";
+					}
+
+					if (!values.username) {
+						errors.username = `Username required*`;
+					}
+
+					if (!values.name) {
+						errors.name = `Name required*`;
+					}
+
+					if (!values.address) {
+						errors.address = `Address required*`;
+					} else if (!addressRegex.test(values.address)) {
+						errors.address = "Invalid address";
+					}
+
+					if (!values.city) {
+						errors.city = `City required*`;
+					}
+
+					if (!values.state) {
+						errors.state = `State required*`;
+					}
+
+					if (!values.zipcode) {
+						errors.zipcode = `Zipcode required*`;
+					} else if (!zipcodeRegex.test(values.zipcode)) {
+						errors.zipcode = `Invalid zipcode*`;
+					}
+
+					if (!values.country) {
+						errors.country = `Country required*`;
+					}
+
+					if (!values.phone) {
+						errors.phone = `Phone number required*`;
+					} else if (!phoneRegex.test(values.phone)) {
+						errors.phone = `Invalid phone number`;
+					}
+
+					if (!values.drlic) {
+						errors.drlic = `Driver License required*`;
+					} else if (values.drlic.length < 9 || values.drlic.length > 9) {
+						errors.drlic = `Driver license # must be 9 digits`;
+					} else if (!driverLicRegex.test(values.drlic)) {
+						errors.drlic = `Invalid Driver license # `;
+					}
+
+					return errors;
+				}}
+				onSubmit={(values, { setSubmitting }) => {
+					setSubmitting(true);
+					setCurrentState(values);
+					createUser();
+					console.log(values);
+					setSubmitting(false);
+				}}
+			>
+				{({ isSubmitting }) => (
+					<Form className="baseForm">
+						<div className="formFieldWrap">
+							<label>Email</label>
+							<div className="formFieldWrapInner">
+								<Field type="email" name="email" className="field" />
+							</div>
+							<ErrorMessage name="email" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Password</label>
+							<div className="formFieldWrapInner">
+								<Field type="password" name="password" className="field" />
+							</div>
+							<ErrorMessage name="password" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Username</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="username" className="field" />
+							</div>
+							<ErrorMessage name="username" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Name</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="name" className="field" />
+							</div>
+							<ErrorMessage name="name" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Address</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="address" className="field" />
+							</div>
+							<ErrorMessage name="address" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>City</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="city" className="field" />
+							</div>
+							<ErrorMessage name="city" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>State</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="state" className="field" />
+							</div>
+							<ErrorMessage name="state" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Zipcode</label>
+							<div className="formFieldWrapInner">
+								<Field type="number" name="zipcode" className="field" />
+							</div>
+							<ErrorMessage name="zipcode" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Country</label>
+							<div className="formFieldWrapInner">
+								<Field type="text" name="country" className="field" />
+							</div>
+							<ErrorMessage name="country" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Phone</label>
+							<div className="formFieldWrapInner">
+								<Field
+									type="text"
+									name="phone"
+									className="field"
+									placeholder="XXX-XXX-XXXX"
+								/>
+							</div>
+							<ErrorMessage name="phone" component="div" className="error" />
+						</div>
+
+						{/* ----------------- */}
+
+						<div className="formFieldWrap">
+							<label>Driver license</label>
+							<div className="formFieldWrapInner">
+								<Field
+									type="text"
+									name="drlic"
+									className="field"
+									placeholder="HXXXXXXXX"
+								/>
+							</div>
+							<ErrorMessage name="drlic" component="div" className="error" />
+						</div>
+
+						<div className="btnCollection">
+							<button type="submit" disabled={isSubmitting}>
+								Sign up
+							</button>
+
+							<div className="btn">
+								<Link href="/signin">Log in</Link>
+							</div>
+						</div>
+
+						<h4 className="baseFormHeading">
+							{data?.createUser && (
+								<p>
+									Signed up with {data.createUser.email} - Please go ahead and
+									sign in!
+								</p>
+							)}
+						</h4>
+					</Form>
+				)}
+			</Formik>
+		</SignUpStyles>
+	);
+}
+
+export default Signup;
+
+const SignUpStyles = styled.div`
+	/* padding: 30px 20px; */
+	margin: 4rem;
+	padding: 3rem 4rem;
+	background-color: white;
+	box-shadow: 0 0 1.5rem rgba(105, 105, 105, 0.5);
+	border-radius: 4px;
+	width: 35vw;
+
+	.baseFormHeading {
+		text-transform: capitalize;
+	}
+
+	.baseForm {
+		display: grid;
+		row-gap: 2rem;
+	}
+
+	.formFieldWrap {
+		display: grid;
+		grid-template-rows: max-content 1fr max-content max-content;
+
+		.formFieldWrapInner {
+			grid-column: 1/-1;
+			background-color: white;
+			border-radius: 2%;
+			font-size: 1rem;
+			height: 4rem;
+			display: flex;
+			transition: background-color 240ms, box-shadow 240ms;
+
+			.field {
+				width: 80%;
+			}
+		}
+
+		.error {
+			color: red;
+		}
+	}
+
+	.btnCollection {
+		display: flex;
+		gap: 2rem;
+	}
+
+	button {
+		height: 5rem;
+		width: 20%;
+		background: var(--orange);
+		border-radius: 3%;
+		border: none;
+		outline: none;
+	}
+
+	.btn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 1rem;
+		height: 5rem;
+		width: 10rem;
+		background: var(--orange);
+
+		a {
+			text-decoration: none;
+			font-weight: normal;
+		}
+	}
+`;
+
+/*
+Old version:
+import React from "react";
+import styled from "styled-components";
+import Form from "../styles/Form";
+import useForm from "../../lib/useForm";
+import Link from "next/link";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
+import Error from "../ErrorMessage";
+import { CURRENT_USER_QUERY } from "./User";
+
+const SIGNUP_MUTATION = gql`
+	mutation SIGNUP_MUTATION(
+		$username: String!
+		$email: String!
+		$password: String!
+		$name: String!
+		$address: String!
+		$city: String!
+		$state: String!
+		$zipcode: Int!
+		$country: String!
+		$phone: String!
+		$drlic: String!
+	) {
+		createUser(
+			data: {
+				username: $username
+				email: $email
+				password: $password
+				name: $name
+				address: $address
+				city: $city
+				state: $state
+				zipcode: $zipcode
+				country: $country
 				phone: $phone
 				drlic: $drlic
 			}
@@ -37,7 +405,8 @@ const SIGNUP_MUTATION = gql`
 		}
 	}
 `;
-function SignUp() {
+
+function Signup() {
 	const { input, handleChange, resetForm } = useForm({
 		username: "",
 		email: "",
@@ -51,11 +420,12 @@ function SignUp() {
 		drlic: "",
 	});
 
-	console.log({ input });
-
 	const [createUser, { loading, data, error }] = useMutation(SIGNUP_MUTATION, {
 		variables: input,
 	});
+
+	console.log(input);
+
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -63,27 +433,21 @@ function SignUp() {
 		resetForm();
 	}
 
-	console.log({ data });
-
+	console.log({ input });
 	return (
 		<SignUpStyles>
-			<div className="signinBubble">
-				<h1>Sign up</h1>
-				<form method="POST" onSubmit={handleSubmit}>
+			<div className="signupBubble">
+				method="POST" prevent input from going into the browser history / url [security issue]
+				<Form method="POST" onSubmit={handleSubmit}>
 					<Error error={error} />
-					<fieldset>
-						{data?.createUser && (
-							<p>
-								Sign up successful! Welcome -{" "}
-								<span>{data.createUser.username}</span> - Please sign in to
-								access your account!
-							</p>
-						)}
-						<label>username</label>
+					<h1>Sign Up</h1>
+					<fieldset disabled={loading}>
+						<label>Username</label>
 						<input
 							type="text"
 							name="username"
 							placeholder="username"
+							autoComplete="username"
 							value={input.username}
 							onChange={handleChange}
 						/>
@@ -92,7 +456,7 @@ function SignUp() {
 						<input
 							type="email"
 							name="email"
-							placeholder="Email"
+							placeholder="email"
 							autoComplete="email"
 							value={input.email}
 							onChange={handleChange}
@@ -102,52 +466,68 @@ function SignUp() {
 						<input
 							type="password"
 							name="password"
-							placeholder="Password"
+							placeholder="password"
+							autoComplete="password"
 							value={input.password}
 							onChange={handleChange}
 						/>
 
-						<label>name</label>
+						<label>Name</label>
 						<input
 							type="text"
 							name="name"
 							placeholder="name"
-							value={input.realname}
+							autoComplete="name"
+							value={input.name}
 							onChange={handleChange}
 						/>
 
-						<label>address</label>
+						<label>Address</label>
 						<input
 							type="text"
 							name="address"
 							placeholder="address"
+							autoComplete="address"
 							value={input.address}
 							onChange={handleChange}
 						/>
 
-						<label>city</label>
+						<label>City</label>
 						<input
 							type="text"
 							name="city"
 							placeholder="city"
+							autoComplete="city"
 							value={input.city}
 							onChange={handleChange}
 						/>
 
-						<label>state</label>
+						<label>State</label>
 						<input
 							type="text"
 							name="state"
 							placeholder="state"
+							autoComplete="state"
 							value={input.state}
 							onChange={handleChange}
 						/>
 
-						<label>Zip Code</label>
+						<label>Zipcode</label>
 						<input
 							type="number"
 							name="zipcode"
-							value={Number(input.zipcode).toString()}
+							placeholder="zipcode"
+							value={input.zipcode}
+							onChange={handleChange}
+						/>
+
+						<label>Country</label>
+						<input
+							type="text"
+							name="country"
+							placeholder="country"
+							autoComplete="country"
+							value={input.country}
 							onChange={handleChange}
 						/>
 
@@ -155,13 +535,14 @@ function SignUp() {
 						<input
 							type="text"
 							name="phone"
-							// value={Number(input.phone).toString()}
-							value={input.phone}
+							placeholder="phone"
+							autoComplete="phone"
 							placeholder="(XXX) XXX-XXXX"
+							value={input.phone}
 							onChange={handleChange}
 						/>
 
-						<label>Driver's License</label>
+						<label>Dr License</label>
 						<input
 							type="text"
 							name="drlic"
@@ -177,110 +558,30 @@ function SignUp() {
 							</Link>
 						</div>
 					</fieldset>
-				</form>
+				</Form>
 			</div>
 		</SignUpStyles>
 	);
 }
 
-export default SignUp;
-
-const loading = keyframes`
-  from {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 100% 100%;
-  }
-`;
+export default Signup;
 
 const SignUpStyles = styled.div`
-	border: solid red;
 	width: 45%;
-	margin-top: 5rem;
 	max-width: 900px;
 
-	.signinBubble {
-		background: white;
-		padding: 3rem;
+	.signupBubble {
+		margin: 6rem 3rem;
 		border-radius: 1rem;
-		max-width: 1100px;
-		min-width: 100px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-		margin: 2rem;
-
-		fieldset {
-			display: flex;
-			flex-direction: column;
-			&[disabled] {
-				opacity: 0.5;
-			}
-			&::before {
-				height: 10px;
-				content: "";
-				display: block;
-				background-image: linear-gradient(
-					to right,
-					#ff8177 0%,
-					#ff867a 0%,
-					#ff8c7f 21%,
-					#f99185 52%,
-					#cf556c 78%,
-					#b12a5b 100%
-				);
-				&[aria-busy="true"]::before {
-					background-size: 50% auto;
-					animation: ${loading} 0.5s linear infinite;
-				}
-			}
-
-			input,
-			select {
-				border: 2px solid rgba(0, 0, 0, 0.54);
-			}
-		}
+		background: white;
 	}
 
 	.btn {
 		display: flex;
-		justify-content: center;
-		margin-top: 2rem;
-		cursor: pointer;
-
-		button {
-			float: right;
-			border: solid var(--orange);
-			padding-left: 5rem;
-			padding-right: 5rem;
-			margin-right: 1rem;
-		}
-	}
-
-	span {
-		color: var(--orange);
-	}
-
-	@media (max-width: 1100px) {
-		button {
-			padding-left: 1rem;
-			padding-right: 1rem;
-		}
-	}
-
-	@media (max-width: 1000px) {
-		.btn {
-			flex-direction: column;
-			button {
-				margin-top: 2rem;
-			}
-		}
+		gap: 2rem;
+		padding: 2rem 0;
 	}
 `;
 
-const FormStyles = styled.div`
-	width: 90%;
-`;
+
+*/

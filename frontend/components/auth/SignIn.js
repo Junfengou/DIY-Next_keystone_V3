@@ -54,8 +54,8 @@ function SignIn() {
 	}
 
 	return (
-		<SignInStyles>
-			<div className="signinBubble">
+		<AuthStyles>
+			<div className="authBubble">
 				{/* method="POST" prevent input from going into the browser history / url [security issue] */}
 				<Form method="POST" onSubmit={handleSubmit}>
 					<Error error={error} />
@@ -88,25 +88,25 @@ function SignIn() {
 					</fieldset>
 				</Form>
 			</div>
-		</SignInStyles>
+		</AuthStyles>
 	);
 }
 
 export default SignIn;
 
-const SignInStyles = styled.div`
+export const AuthStyles = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
 
-	.signinBubble {
+	.authBubble {
 		background: white;
 		/* border: solid red; */
-		width: 40rem;
-		height: 40rem;
+		/* width: 40rem;
+		height: 40rem; */
 		border-radius: 1rem;
-		padding: 2rem;
+		padding: 7rem 2rem;
 		max-width: 1100px;
 		min-width: 300px;
 		display: flex;
