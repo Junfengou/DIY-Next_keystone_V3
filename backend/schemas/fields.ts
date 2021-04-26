@@ -54,6 +54,14 @@ export const permissionFields = {
     defaultValue: false,
     label: 'Employee can update rental list',
   }),
+
+  //----------------------------------------------------
+
+  canAccessAdminFunctionClient: checkbox({
+    defaultValue: false,
+    label: 'Admin and employee can access client side admin accesses'
+  })
+
   
 };
 

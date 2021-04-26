@@ -16,8 +16,8 @@ function StorageUnitz({ item }) {
 				<h4>{unitType.description}</h4>
 			</div>
 			<div className="tagFooter">
-				<h4>Unit #{unitType.unitNum}</h4>
-				{/* <h4>{unitType.availability}</h4> */}
+				{/* <h4>Unit #{unitType.unitNum}</h4> */}
+				<h4>{unitType.availability}</h4>
 				<button
 					onClick={() =>
 						grabUnit(id, unitType.price, storageUnitType, unitType.unitNum)

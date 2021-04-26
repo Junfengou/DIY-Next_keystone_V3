@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useContext, createContext } from "react";
 
 const LocalStateContext = createContext();
@@ -15,6 +16,97 @@ function RentalStateProvider({ children }) {
 	const [unit, setUnit] = useState([]);
 	const [cartOpen, setCartOpen] = useState(false);
 	const [click, setClick] = useState(false);
+
+	//--------------------------------------
+	// Admin access states
+	const [rentalID, setRentalID] = useState("");
+	const [employeeID, setEmployeeID] = useState("");
+	const [storageID, setStorageID] = useState([]);
+	const [storageMutation, setStorageMutation] = useState([]);
+	const [storageUnitTypeID, setStorageUnitTypeID] = useState([]);
+
+	// ------------
+	// display states for admin access
+	const [displayRental, setDisplayRental] = useState("");
+	const [displayEmployee, setDisplayEmployee] = useState("");
+	const [displayStorage, setDisplayStorage] = useState([]);
+	const [displayUnitTypes, setDisplayUnitTypes] = useState([]);
+
+	function grabRentalID(id, name) {
+		setRentalID(id);
+		setDisplayRental(name);
+	}
+	function deleteRentalID() {
+		setRentalID("");
+		setDisplayRental("");
+	}
+
+	function grabEmployeeID(id, title) {
+		setEmployeeID(id);
+		setDisplayEmployee(title);
+	}
+
+	function deleteEmployeeID() {
+		setEmployeeID("");
+		setDisplayEmployee("");
+	}
+
+	function grabStorageUnitTypeID(id, unitType) {
+		setStorageUnitTypeID([
+			...[...storageUnitTypeID, { id }]
+				.reduce((map, obj) => map.set(obj.id, obj), new Map())
+				.values(),
+		]);
+		setDisplayUnitTypes([
+			...[...displayUnitTypes, { unitType, id }]
+				.reduce((map, obj) => map.set(obj.unitType, obj), new Map())
+				.values(),
+		]);
+	}
+
+	function deleteStorageUnitType(id) {
+		filterItem(setStorageUnitTypeID, storageUnitTypeID, id);
+		filterItem(setDisplayUnitTypes, displayUnitTypes, id);
+	}
+
+	function grabStorageUnitID(
+		id,
+		price,
+		description,
+		availability,
+		unitNum,
+		unitType
+	) {
+		// This one is for Rental list mutation
+		setStorageID([
+			...[...storageID, { id }]
+				.reduce((map, obj) => map.set(obj.id, obj), new Map())
+				.values(),
+		]);
+
+		// This one is for storage mutation
+		setStorageMutation([
+			...[
+				...storageMutation,
+				{ id, data: { price, description, availability: "RESERVED", unitNum } },
+			]
+				.reduce((map, obj) => map.set(obj.id, obj), new Map())
+				.values(),
+		]);
+		setDisplayStorage([
+			...[...displayStorage, { unitType, id }]
+				.reduce((map, obj) => map.set(obj.unitType, obj), new Map())
+				.values(),
+		]);
+	}
+
+	function deleteStorageUnit(id) {
+		filterItem(setStorageID, storageID, id);
+		filterItem(setStorageMutation, storageMutation, id);
+		filterItem(setDisplayStorage, displayStorage, id);
+	}
+
+	// --------------------------------------------
 
 	function openMobileMenu() {
 		setClick(!click);
@@ -96,6 +188,23 @@ function RentalStateProvider({ children }) {
 				openMobileMenu,
 				closeMobileMenu,
 				setLocalStorageItems,
+				rentalID,
+				grabRentalID,
+				employeeID,
+				grabEmployeeID,
+				storageID,
+				storageMutation,
+				grabStorageUnitID,
+				storageUnitTypeID,
+				grabStorageUnitTypeID,
+				displayRental,
+				displayEmployee,
+				displayStorage,
+				displayUnitTypes,
+				deleteRentalID,
+				deleteEmployeeID,
+				deleteStorageUnitType,
+				deleteStorageUnit,
 			}}
 		>
 			{children}
@@ -104,3 +213,13 @@ function RentalStateProvider({ children }) {
 }
 
 export { RentalStateProvider, userRental };
+
+/*
+grabStorageUnitID(
+										unit.id,
+										unit.price,
+										unit.description,
+										unit.availability,
+										unit.unitNum
+									)
+*/

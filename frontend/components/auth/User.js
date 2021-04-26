@@ -9,6 +9,9 @@ export const CURRENT_USER_QUERY = gql`
 				name
 				username
 				email
+				role {
+					canAccessAdminFunctionClient
+				}
 			}
 		}
 	}
@@ -16,6 +19,7 @@ export const CURRENT_USER_QUERY = gql`
 
 function useUser() {
 	const { data } = useQuery(CURRENT_USER_QUERY);
+	// console.log({ data });
 	return data?.authenticatedItem;
 }
 

@@ -12,6 +12,8 @@ export const RentalList = list({
     fields: {
         rentby: relationship({ref: "Rental", ui: {labelField: "rented by"}}),
         employee: relationship({ref: "Employee"}),
+        storageUnit: relationship({ref: "StorageUnit", many: true}),
+        storageType: relationship({ref: "StorageUnitType", many: true})
     }
 })
 

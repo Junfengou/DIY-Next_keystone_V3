@@ -25,6 +25,7 @@ export const StorageUnit = list({
             options: [
               { label: 'AVAILABLE', value: 'AVAILABLE' },
               { label: 'UNAVAILABLE', value: 'UNAVAILABLE' },
+              { label: 'RESERVED', value: 'RESERVED' },
             ],
             defaultValue: 'AVAILABLE',
           }),
