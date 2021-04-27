@@ -12,9 +12,9 @@ export const ALL_RENTALS_QUERY = gql`
 	}
 `;
 
-function rentals() {
+function Rentals() {
 	const { data } = useQuery(ALL_RENTALS_QUERY);
 	return data?.allRentals;
 }
 
-export default rentals;
+export default Rentals;

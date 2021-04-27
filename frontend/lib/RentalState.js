@@ -18,7 +18,12 @@ function RentalStateProvider({ children }) {
 	const [click, setClick] = useState(false);
 
 	//--------------------------------------
-	// Admin access states
+	// Admin access Employee states
+	const [userID, setUserID] = useState("");
+	const [displayUserName, setDisplayUserName] = useState("");
+
+	//--------------------------------------
+	// Admin access Renal List states
 	const [rentalID, setRentalID] = useState("");
 	const [employeeID, setEmployeeID] = useState("");
 	const [storageID, setStorageID] = useState([]);
@@ -26,11 +31,14 @@ function RentalStateProvider({ children }) {
 	const [storageUnitTypeID, setStorageUnitTypeID] = useState([]);
 
 	// ------------
-	// display states for admin access
+	// display for Rental List states
 	const [displayRental, setDisplayRental] = useState("");
 	const [displayEmployee, setDisplayEmployee] = useState("");
 	const [displayStorage, setDisplayStorage] = useState([]);
 	const [displayUnitTypes, setDisplayUnitTypes] = useState([]);
+
+	// ------------
+	// functionalities for Rental List actions
 
 	function grabRentalID(id, name) {
 		setRentalID(id);
@@ -106,7 +114,15 @@ function RentalStateProvider({ children }) {
 		filterItem(setDisplayStorage, displayStorage, id);
 	}
 
-	// --------------------------------------------
+	// ------------
+	// functionalities for creating a new employee access
+	function grabUserID(id, name) {
+		setUserID(id);
+		setDisplayUserName(name);
+	}
+
+	// ------------
+	// functionalities for cart menu access
 
 	function openMobileMenu() {
 		setClick(!click);
@@ -205,6 +221,8 @@ function RentalStateProvider({ children }) {
 				deleteEmployeeID,
 				deleteStorageUnitType,
 				deleteStorageUnit,
+				displayUserName,
+				grabUserID,
 			}}
 		>
 			{children}

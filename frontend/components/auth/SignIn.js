@@ -48,7 +48,7 @@ function SignIn() {
 	}
 
 	return (
-		<AuthStyles>
+		<FormStyles>
 			<header className="baseFormHeader">
 				<h1 className="baseFormHeading">Sign in</h1>
 			</header>
@@ -81,6 +81,7 @@ function SignIn() {
 					setCurrentState(values);
 					authenticateUserWithPassword();
 					console.log(values);
+					// console.log(currentState);
 					setSubmitting(false);
 				}}
 			>
@@ -125,13 +126,13 @@ function SignIn() {
 					</Form>
 				)}
 			</Formik>
-		</AuthStyles>
+		</FormStyles>
 	);
 }
 
 export default SignIn;
 
-export const AuthStyles = styled.div`
+export const FormStyles = styled.div`
 	margin: 4rem;
 	padding: 3rem 4rem;
 	background-color: white;

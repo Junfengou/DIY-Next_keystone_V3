@@ -9,9 +9,9 @@ export const ALL_EMPLOYEE_QUERY = gql`
 	}
 `;
 
-function employees() {
+function Employees() {
 	const { data } = useQuery(ALL_EMPLOYEE_QUERY);
 	return data?.allEmployees;
 }
 
-export default employees;
+export default Employees;

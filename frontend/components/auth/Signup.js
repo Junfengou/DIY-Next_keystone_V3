@@ -17,8 +17,8 @@ const SIGNUP_MUTATION = gql`
 		$zipcode: Int!
 		$country: String!
 		$phone: String!
-		$drlic: String!
-	) {
+	) # $drlic: String!
+	{
 		createUser(
 			data: {
 				username: $username
@@ -31,7 +31,7 @@ const SIGNUP_MUTATION = gql`
 				zipcode: $zipcode
 				country: $country
 				phone: $phone
-				drlic: $drlic
+				# drlic: $drlic
 			}
 		) {
 			username
@@ -133,13 +133,13 @@ function Signup() {
 						errors.phone = `Invalid phone number`;
 					}
 
-					if (!values.drlic) {
-						errors.drlic = `Driver License required*`;
-					} else if (values.drlic.length < 9 || values.drlic.length > 9) {
-						errors.drlic = `Driver license # must be 9 digits`;
-					} else if (!driverLicRegex.test(values.drlic)) {
-						errors.drlic = `Invalid Driver license # `;
-					}
+					// if (!values.drlic) {
+					// 	errors.drlic = `Driver License required*`;
+					// } else if (values.drlic.length < 9 || values.drlic.length > 9) {
+					// 	errors.drlic = `Driver license # must be 9 digits`;
+					// } else if (!driverLicRegex.test(values.drlic)) {
+					// 	errors.drlic = `Invalid Driver license # `;
+					// }
 
 					return errors;
 				}}
@@ -258,7 +258,7 @@ function Signup() {
 
 						{/* ----------------- */}
 
-						<div className="formFieldWrap">
+						{/* <div className="formFieldWrap">
 							<label>Driver license</label>
 							<div className="formFieldWrapInner">
 								<Field
@@ -269,7 +269,7 @@ function Signup() {
 								/>
 							</div>
 							<ErrorMessage name="drlic" component="div" className="error" />
-						</div>
+						</div> */}
 
 						<div className="btnCollection">
 							<button type="submit" disabled={isSubmitting}>

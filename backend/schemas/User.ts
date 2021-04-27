@@ -20,7 +20,7 @@ export const User = list({
         zipcode: integer({isRequired: true}),
         country: text({isRequired: true}),
         phone: text({isRequired: true}),
-        drlic: text({isRequired: true}),
+        // drlic: text({isRequired: true}),
         additionalInfo: text(), 
         rental: relationship({ref:"Rental.user"}),
         role: relationship({ref: "Role.assignedTo"}) // Also add access control

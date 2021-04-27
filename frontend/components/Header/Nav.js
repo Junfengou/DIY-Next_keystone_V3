@@ -7,13 +7,23 @@ function Nav() {
 	const user = useUser();
 	return (
 		<NavStyles>
-			{user ? (
+			{user && !user?.role?.canAccessAdminFunctionClient && (
 				<>
 					<Link href="/about">About</Link>
 					<Link href="/faq">FAQ</Link>
 					<Link href="/storages">Storages</Link>
 				</>
-			) : (
+			)}
+			{user && user?.role?.canAccessAdminFunctionClient && (
+				<>
+					<Link href="/about">About</Link>
+					<Link href="/faq">FAQ</Link>
+					<Link href="/storages">Storages</Link>
+					<Link href="/admindashboard">Admin</Link>
+				</>
+			)}
+
+			{!user && (
 				<>
 					<Link href="/about">About</Link>
 					<Link href="/faq">FAQ</Link>

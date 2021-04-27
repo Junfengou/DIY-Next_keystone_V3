@@ -1,9 +1,10 @@
 import React from "react";
 import MainAccess from "../components/AdminAccess/MainAccess";
 import NoAccess from "../components/AdminAccess/NoAccess";
+import RentalListAccess from "../components/AdminAccess/RentalListAccess";
 import useUser from "../components/auth/User";
 
-function test() {
+function adminDashboard() {
 	const user = useUser();
 	const userPermission = user?.role?.canAccessAdminFunctionClient;
 
@@ -15,4 +16,4 @@ function test() {
 	);
 }
 
-export default test;
+export default adminDashboard;

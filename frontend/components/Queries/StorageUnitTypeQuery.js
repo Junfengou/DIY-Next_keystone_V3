@@ -9,9 +9,9 @@ export const ALL_STORAGE_UNIT_TYPES_QUERY = gql`
 	}
 `;
 
-function storageUnitsTypes() {
+function StorageUnitsTypes() {
 	const { data } = useQuery(ALL_STORAGE_UNIT_TYPES_QUERY);
 	return data?.allStorageUnitTypes;
 }
 
-export default storageUnitsTypes;
+export default StorageUnitsTypes;
