@@ -289,7 +289,6 @@ export const CardInfoStyles = styled.div`
 	align-items: center;
 	flex-direction: column;
 	gap: 2rem;
-
 	margin: 2rem;
 	padding: 2rem;
 
@@ -303,6 +302,10 @@ export const CardInfoStyles = styled.div`
 		gap: 2rem;
 		/* border: solid red; */
 		width: 100%;
+	}
+
+	span {
+		color: var(--orange);
 	}
 `;
 

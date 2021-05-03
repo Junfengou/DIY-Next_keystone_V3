@@ -11,22 +11,34 @@ function ReadRentalList() {
 			<h2>Rental list</h2>
 			{RentalListArr?.map((item, i) => (
 				<div className="container" key={i}>
-					<h3>Customer: {item?.rentby?.name}</h3>
-					<h3>Employee: {item?.employee?.title}</h3>
+					<h3>
+						<span>Customer: </span>
+						{item?.rentby?.name}
+					</h3>
+					<h3>
+						<span>Employee: </span>
+						{item?.employee?.title}
+					</h3>
 					<div className="unit">
-						<h4>Storage unit #</h4>
+						<h4>
+							<span>Storage unit #</span>
+						</h4>
 						{item?.storageUnit?.map((unit) => (
 							<p>{unit?.unitNum}</p>
 						))}
 					</div>
 
 					<div className="unitType">
-						<h4>Unit type</h4>
+						<h4>
+							<span>Unit type</span>
+						</h4>
 						{item?.storageType?.map((unitType) => (
 							<p>{unitType?.storageUnitType}</p>
 						))}
 					</div>
-					<h4>{item?.rentby?.availability}</h4>
+					<h4>
+						<span>{item?.rentby?.availability}</span>
+					</h4>
 				</div>
 			))}
 		</RentalListStyles>
@@ -65,5 +77,8 @@ const RentalListStyles = styled.div`
 		justify-content: center;
 		align-items: center;
 		gap: 1rem;
+	}
+	span {
+		color: var(--orange);
 	}
 `;

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useUser from "./User";
+import { AccessStyles, CardInfoStyles } from "../AdminAccess/RentalListAccess";
 
 function Account() {
 	const User = useUser();
@@ -13,24 +14,39 @@ function Account() {
 						<h2>Welcome back {User?.name}</h2>
 					</div>
 					<div className="container">
-						<div className="accountInfo">
-							<p>Email: {User?.email}</p>
-							<p>Address: {User?.address}</p>
-							<p>City: {User?.city}</p>
-							<p>State: {User?.state}</p>
-							<p>Zipcode: {User?.zipcode}</p>
+						<div className="wrapper">
+							<p>
+								<span>Email:</span> {User?.email}
+							</p>
+							<p>
+								<span>Address:</span> {User?.address}
+							</p>
+							<p>
+								<span>City:</span> {User?.city}
+							</p>
+							<p>
+								<span>State:</span> {User?.state}
+							</p>
+							<p>
+								<span>Zipcode:</span> {User?.zipcode}
+							</p>
+							<p />
 						</div>
-						<div className="storageRequest">
+
+						<div>
 							{User?.rental ? (
-								<>
+								<div className="wrapper">
 									<p>
-										Rental request:{" "}
-										{User?.rental?.rental?.map((item, i) => (
-											<p>{item?.storageUnitType}</p>
-										))}
+										<span>Rental request:</span>{" "}
 									</p>
-									<p>Status: {User?.rental?.availability}</p>
-								</>
+									{User?.rental?.rental?.map((item, i) => (
+										<p>{item?.storageUnitType}</p>
+									))}
+									<p>
+										<span>Status:</span> {User?.rental?.availability}
+									</p>
+									<p />
+								</div>
 							) : null}
 						</div>
 					</div>
@@ -55,6 +71,7 @@ const AccountStyles = styled.div`
 
 	.container {
 		display: flex;
+		flex-direction: column;
 		justify-content: space-around;
 		align-items: center;
 		max-width: 1300px;
@@ -65,5 +82,20 @@ const AccountStyles = styled.div`
 			flex-direction: column;
 			gap: 3rem;
 		}
+	}
+
+	.wrapper {
+		display: flex;
+		justify-content: space-between;
+		/* padding: 0 2rem; */
+		padding-left: 2rem;
+		background: var(--offWhite);
+		transform: skew(-15deg);
+		gap: 2rem;
+		width: 100%;
+	}
+
+	span {
+		color: var(--orange);
 	}
 `;
