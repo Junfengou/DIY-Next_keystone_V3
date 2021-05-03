@@ -32,7 +32,7 @@ function StorageUnitz({ item }) {
 
 export default StorageUnitz;
 
-const StorageUnitStyles = styled.div`
+export const StorageUnitStyles = styled.div`
 	border: solid 2px var(--orange);
 	display: grid;
 	grid-template-rows: 5rem max-content 4rem;

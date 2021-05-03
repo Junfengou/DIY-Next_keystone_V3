@@ -23,7 +23,8 @@ export const User = list({
         // drlic: text({isRequired: true}),
         additionalInfo: text(), 
         rental: relationship({ref:"Rental.user"}),
-        role: relationship({ref: "Role.assignedTo"}) // Also add access control
+        role: relationship({ref: "Role.assignedTo"}), // Also add access control
+        // rentallist: relationship({ref: "RentalList"}),
     }
 })
 

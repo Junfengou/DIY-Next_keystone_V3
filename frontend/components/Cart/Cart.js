@@ -21,6 +21,7 @@ const ADD_RENTAL_MUTATION = gql`
 		$month: String
 		$year: String
 		$name: String
+		$availability: String
 		$id: ID!
 	) {
 		createRental(
@@ -31,6 +32,7 @@ const ADD_RENTAL_MUTATION = gql`
 				month: $month
 				year: $year
 				name: $name
+				availability: $availability
 				user: { connect: { id: $id } }
 			}
 		) {
@@ -45,6 +47,7 @@ function Cart() {
 	const [month, setMonth] = useState("");
 	const [day, setDay] = useState("");
 	const [year, setYear] = useState("");
+	const availability = "IN PROGRESS";
 	const thisUser = useUser();
 	const router = useRouter();
 	const name = thisUser?.name;
@@ -58,7 +61,16 @@ function Cart() {
 			: 0;
 
 	const [createRental, { loading, error }] = useMutation(ADD_RENTAL_MUTATION, {
-		variables: { paymentAmount, rental, day, month, year, name, id },
+		variables: {
+			paymentAmount,
+			rental,
+			day,
+			month,
+			year,
+			name,
+			availability,
+			id,
+		},
 	});
 	if (!thisUser) return null;
 

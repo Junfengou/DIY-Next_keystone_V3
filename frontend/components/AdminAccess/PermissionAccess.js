@@ -1,40 +1,31 @@
 import React, { useState } from "react";
 import Employees from "../Queries/EmployeeQuery";
-import Users from "../Queries/UserQuery";
+import Permission from "../Queries/RolesQuery";
+import UserRole from "../Queries/UserRoleQuery";
 import { AccessStyles, CardInfoStyles } from "./RentalListAccess";
-import { userRental } from "../../lib/RentalState";
-import { FormStyles } from "../auth/SignIn";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
-import styled from "styled-components";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import SickButton from "../styles/SickButton";
+import { FormStyles } from "../auth/SignIn";
+import gql from "graphql-tag";
+import styled from "styled-components";
+import { useMutation } from "@apollo/client";
 
-const CREATE_EMPLOYEE_MUTATION = gql`
-	mutation CREATE_EMPLOYEE_MUTATION(
-		$employeee: ID!
-		$title: String
-		$payStatus: String
-	) {
-		createEmployee(
-			data: {
-				employeee: { connect: { id: $employeee } }
-				title: $title
-				payStatus: $payStatus
-			}
-		) {
-			title
+const CREATE_ROLE_MUTATION = gql`
+	mutation CREATE_ROLE_MUTATION($userID: ID!, $roleID: ID!) {
+		updateUser(id: $userID, data: { role: { connect: { id: $roleID } } }) {
+			username
 		}
 	}
 `;
 
-function EmployeeListAccess() {
-	const UserArr = Users();
+function PermissionAccess() {
 	const EmployeeArr = Employees();
-	const [isCopied, setIsCopied] = useState(false);
+	const PermissionArr = Permission();
+	const UserPermission = UserRole();
 
 	const [currentState, setCurrentState] = useState({});
+	const [isCopied, setIsCopied] = useState(false);
 
 	const onCopyText = () => {
 		setIsCopied(true);
@@ -43,25 +34,44 @@ function EmployeeListAccess() {
 		}, 1000);
 	};
 
-	const [createEmployee, { loading, data }] = useMutation(
-		CREATE_EMPLOYEE_MUTATION,
-		{
-			variables: currentState,
-		}
-	);
+	const [updateUser, { loading, data }] = useMutation(CREATE_ROLE_MUTATION, {
+		variables: currentState,
+	});
 
 	return (
 		<AccessStyles>
 			<div className="InfoList">
 				<CardInfoStyles>
 					<h3>Users</h3>
-					<span>{isCopied ? "Copied" : ""}</span>
-					{UserArr?.map((user, i) => (
+					{UserPermission?.map((user, i) => (
 						<div className="Container" key={i}>
-							<p>{user.name}</p>
-							<CopyToClipboard text={user.id} onCopy={onCopyText}>
-								<SickButton>Copy User ID</SickButton>
-							</CopyToClipboard>
+							{!user?.role && (
+								<>
+									<p>
+										{user.name} - {user.id}
+									</p>
+									<CopyToClipboard text={user.id} onCopy={onCopyText}>
+										<SickButton>Copy User ID</SickButton>
+									</CopyToClipboard>
+								</>
+							)}
+						</div>
+					))}
+				</CardInfoStyles>
+
+				<CardInfoStyles>
+					<h3>Roles</h3>
+					{PermissionArr?.map((permission, i) => (
+						<div className="Container" key={i}>
+							<>
+								<p>
+									{permission.name} - {permission.id}
+								</p>
+
+								<CopyToClipboard text={permission.id} onCopy={onCopyText}>
+									<SickButton>Copy Role ID</SickButton>
+								</CopyToClipboard>
+							</>
 						</div>
 					))}
 				</CardInfoStyles>
@@ -75,29 +85,23 @@ function EmployeeListAccess() {
 					))}
 				</CustomStyles>
 			</div>
+
 			<div className="DataDisplay">
 				<FormStyles>
 					<header className="baseFormHeader">
-						<h1 className="baseFormHeading">Create a new employee</h1>
+						<h1 className="baseFormHeading">Assign a role to user</h1>
 					</header>
 					<Formik
-						initialValues={{ employeee: "", title: "", payStatus: "" }}
+						initialValues={{ userID: "", roleID: "" }}
 						validate={(values) => {
 							const errors = {};
-							const payRegex = /SALARY|HOURLY/g;
 
-							if (!values.employeee) {
-								errors.employeee = `User ID required* `;
+							if (!values.userID) {
+								errors.userID = `User ID required* `;
 							}
 
-							if (!values.title) {
-								errors.title = `Employee title required* `;
-							}
-
-							if (!values.payStatus) {
-								errors.payStatus = "Pay status required*";
-							} else if (!payRegex.test(values.payStatus)) {
-								errors.payStatus = "Employee can either be SALARY or HOURLY";
+							if (!values.roleID) {
+								errors.roleID = `Role ID required* `;
 							}
 
 							return errors;
@@ -105,8 +109,8 @@ function EmployeeListAccess() {
 						onSubmit={(values, { setSubmitting }) => {
 							setSubmitting(true);
 							setCurrentState(values);
-							createEmployee();
-							// console.log(values);
+							updateUser();
+							console.log(values);
 							setSubmitting(false);
 							setTimeout(() => {
 								window.location.reload();
@@ -118,11 +122,11 @@ function EmployeeListAccess() {
 								<div className="formFieldWrap">
 									<label>User ID</label>
 									<div className="formFieldWrapInner">
-										<Field type="text" name="employeee" className="field" />
+										<Field type="text" name="userID" className="field" />
 									</div>
-									<span>Copy a user ID from above</span>
+									<span>Copy a user ID above</span>
 									<ErrorMessage
-										name="employeee"
+										name="userID"
 										component="div"
 										className="error"
 									/>
@@ -131,28 +135,13 @@ function EmployeeListAccess() {
 								{/* ----------------- */}
 
 								<div className="formFieldWrap">
-									<label>Title</label>
+									<label>Role ID</label>
 									<div className="formFieldWrapInner">
-										<Field type="text" name="title" className="field" />
+										<Field type="text" name="roleID" className="field" />
 									</div>
-									<span>Format: Employee - John</span>
+									<span>Copy a role ID above</span>
 									<ErrorMessage
-										name="title"
-										component="div"
-										className="error"
-									/>
-								</div>
-
-								{/* ----------------- */}
-
-								<div className="formFieldWrap">
-									<label>Pay Status</label>
-									<div className="formFieldWrapInner">
-										<Field type="text" name="payStatus" className="field" />
-									</div>
-									<span>HOURLY OR SALARY</span>
-									<ErrorMessage
-										name="payStatus"
+										name="roleID"
 										component="div"
 										className="error"
 									/>
@@ -160,7 +149,7 @@ function EmployeeListAccess() {
 
 								<div className="btnCollection">
 									<button type="submit" disabled={isSubmitting}>
-										Add an employee
+										Add a role to user
 									</button>
 								</div>
 							</Form>
@@ -172,7 +161,7 @@ function EmployeeListAccess() {
 	);
 }
 
-export default EmployeeListAccess;
+export default PermissionAccess;
 
 const CustomStyles = styled.div`
 	display: flex;

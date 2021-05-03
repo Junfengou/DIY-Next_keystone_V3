@@ -19,6 +19,13 @@ export const Rental = list({
         month: text(),
         year: text(),
         name: text(),
+        availability: select({
+            options: [
+              { label: 'IN PROGRESS', value: 'IN PROGRESS' },
+              { label: 'APPROVED', value: 'APPROVED' },
+            ],
+            defaultValue: 'IN PROGRESS',
+          }),
         user: relationship({ref: "User.rental"}),
     }
 })

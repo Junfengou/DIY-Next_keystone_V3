@@ -16,9 +16,8 @@ const SIGNUP_MUTATION = gql`
 		$state: String!
 		$zipcode: Int!
 		$country: String!
-		$phone: String!
-	) # $drlic: String!
-	{
+		$phone: String! # $drlic: String!
+	) {
 		createUser(
 			data: {
 				username: $username
@@ -168,6 +167,10 @@ function Signup() {
 							<div className="formFieldWrapInner">
 								<Field type="password" name="password" className="field" />
 							</div>
+							<span>
+								Password must contain one number, one lower case, one uppercase,
+								and one symbol
+							</span>
 							<ErrorMessage name="password" component="div" className="error" />
 						</div>
 
@@ -188,6 +191,7 @@ function Signup() {
 							<div className="formFieldWrapInner">
 								<Field type="text" name="name" className="field" />
 							</div>
+							<span>Please enter first and last name</span>
 							<ErrorMessage name="name" component="div" className="error" />
 						</div>
 
@@ -228,6 +232,7 @@ function Signup() {
 							<div className="formFieldWrapInner">
 								<Field type="number" name="zipcode" className="field" />
 							</div>
+							<span>Zip code must be no longer than 6 digits</span>
 							<ErrorMessage name="zipcode" component="div" className="error" />
 						</div>
 
@@ -246,13 +251,9 @@ function Signup() {
 						<div className="formFieldWrap">
 							<label>Phone</label>
 							<div className="formFieldWrapInner">
-								<Field
-									type="text"
-									name="phone"
-									className="field"
-									placeholder="XXX-XXX-XXXX"
-								/>
+								<Field type="text" name="phone" className="field" />
 							</div>
+							<span>Enter the phone number without - in between</span>
 							<ErrorMessage name="phone" component="div" className="error" />
 						</div>
 
@@ -352,6 +353,9 @@ const SignUpStyles = styled.div`
 		border-radius: 3%;
 		border: none;
 		outline: none;
+	}
+	span {
+		font-size: 1rem;
 	}
 
 	.btn {

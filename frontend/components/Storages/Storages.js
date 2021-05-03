@@ -7,9 +7,23 @@ import gql from "graphql-tag";
 import StorageUnitz from "./StorageUnitz";
 import Pagination from "../Pagination/Pagination";
 
+// FIX THIS!!!!!!!!!!!!
+
 export const ALL_STORAGE_UNIT_QUERY = gql`
-	query ALL_STORAGE_UNIT_QUERY($skip: Int = 0, $first: Int) {
-		allStorageUnitTypes(first: $first, skip: $skip) {
+	query ALL_STORAGE_UNIT_QUERY(
+		$skip: Int = 0
+		$first: Int
+		$availability_not: String
+		$reserved: String
+	) {
+		allStorageUnitTypes(
+			first: $first
+			skip: $skip
+			where: {
+				unitType: { availability_not: $availability_not }
+				AND: [{ unitType: { availability_not: $reserved } }]
+			}
+		) {
 			id
 			storageUnitType
 			unitType {
@@ -27,6 +41,8 @@ function Storages({ page }) {
 		variables: {
 			skip: page * perPage - perPage,
 			first: perPage,
+			availability_not: "UNAVAILABLE",
+			reserved: "RESERVED",
 		},
 	});
 	return (
@@ -41,12 +57,18 @@ function Storages({ page }) {
 					<Location />
 				</div>
 
-				<div className="items">
+				{/* <div className="items">
 					{data?.allStorageUnitTypes.map((item, i) => {
 						if (item.unitType.availability === "AVAILABLE") {
 							return <StorageUnitz key={i} item={item} />;
 						}
 					})}
+				</div> */}
+
+				<div className="items">
+					{data?.allStorageUnitTypes.map((item, i) => (
+						<StorageUnitz key={i} item={item} />
+					))}
 				</div>
 			</div>
 		</StorageStyles>

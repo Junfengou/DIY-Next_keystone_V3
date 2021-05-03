@@ -7,6 +7,8 @@ import StorageUnits from "../Queries/StorageQuery";
 import { userRental } from "../../lib/RentalState";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import SickButton from "../styles/SickButton";
+import UsernameStyles from "../styles/UsernameStyles";
 
 const UPDATE_STORAGE_STATUS_MUTATION = gql`
 	mutation UPDATE_STORAGE_STATUS_MUTATION(
@@ -40,6 +42,14 @@ const CREATE_RENTAL_LIST_MUTATION = gql`
 	}
 `;
 
+const CREATE_RENTAL_MUTATION = gql`
+	mutation CREATE_RENTAL_MUTATION($rentalID: ID!, $rentalMutation: String) {
+		updateRental(id: $rentalID, data: { availability: $rentalMutation }) {
+			paymentAmount
+		}
+	}
+`;
+
 function RentalListAccess() {
 	const RentalArr = Rentals();
 	const EmployeeArr = Employees();
@@ -63,6 +73,7 @@ function RentalListAccess() {
 		deleteEmployeeID,
 		deleteStorageUnitType,
 		deleteStorageUnit,
+		rentalMutation,
 	} = userRental();
 	// console.log(
 	// 	{ rentalID },
@@ -75,57 +86,75 @@ function RentalListAccess() {
 		variables: { storageMutation },
 	});
 
-	const [createRentalList] = useMutation(CREATE_RENTAL_LIST_MUTATION, {
-		variables: { rentalID, employeeID, storageID, storageUnitTypeID },
+	const [createRentalList, { loading }] = useMutation(
+		CREATE_RENTAL_LIST_MUTATION,
+		{
+			variables: { rentalID, employeeID, storageID, storageUnitTypeID },
+		}
+	);
+
+	const [updateRental] = useMutation(CREATE_RENTAL_MUTATION, {
+		variables: { rentalID, rentalMutation },
 	});
 
 	async function createRentaListItems() {
 		await updateStorageUnits();
 		await createRentalList();
+		await updateRental();
 		setTimeout(() => {
 			window.location.reload();
-		}, 1500);
+		}, 500);
 	}
 	return (
 		<AccessStyles>
 			<div className="InfoList">
 				{/* Renal display */}
 				<CardInfoStyles>
-					{RentalArr?.map((person, i) => (
-						<div className="Container" key={i}>
-							<p>{person.name}</p>
-							{person.rental.map((item, i) => (
-								<p>{item.storageUnitType}</p>
-							))}
-							<button onClick={() => grabRentalID(person.id, person.name)}>
-								add
-							</button>
-						</div>
-					))}
+					<h3>Rental requests</h3>
+					{RentalArr?.map((person, i) => {
+						if (person.availability === "IN PROGRESS") {
+							return (
+								<div className="Container" key={i}>
+									<p>{person.name}</p>
+									{person.rental.map((item, i) => (
+										<p>{item.storageUnitType}</p>
+									))}
+									<p>{person.availability}</p>
+									<SickButton
+										onClick={() => grabRentalID(person.id, person.name)}
+									>
+										add
+									</SickButton>
+								</div>
+							);
+						}
+					})}
 				</CardInfoStyles>
 
 				{/* Employee display */}
 				<CardInfoStyles>
+					<h3>Employees</h3>
 					{EmployeeArr?.map((employee, i) => (
 						<div className="Container" key={i}>
 							<p>{employee.title}</p>
-							<button
+							<SickButton
 								onClick={() => grabEmployeeID(employee.id, employee.title)}
 							>
 								add
-							</button>
+							</SickButton>
 						</div>
 					))}
 				</CardInfoStyles>
 
 				{/* Storage units display */}
 				<CardInfoStyles>
+					<h3>Storage units</h3>
 					{StorageUnitArr?.map((unit, i) => (
 						<div className="Container" key={i}>
 							<p>
 								#{unit.unitNum} - {unit.availability}
 							</p>
-							<button
+							<SickButton
 								onClick={() =>
 									grabStorageUnitID(
 										unit.id,
@@ -138,55 +167,73 @@ function RentalListAccess() {
 								}
 							>
 								add
-							</button>
+							</SickButton>
 						</div>
 					))}
 				</CardInfoStyles>
 
 				{/* Storage units types display */}
 				<CardInfoStyles>
+					<h3>Storage unit type</h3>
 					{StorageUnitTypesArr?.map((unitType, i) => (
 						<div className="Container" key={i}>
 							<p>{unitType.storageUnitType}</p>
-							<button
+							<p>{unitType.unitType?.availability}</p>
+							<SickButton
 								onClick={() =>
 									grabStorageUnitTypeID(unitType.id, unitType.storageUnitType)
 								}
 							>
 								add
-							</button>
+							</SickButton>
 						</div>
 					))}
 				</CardInfoStyles>
 			</div>
 			<div className="DataDisplay">
-				<div className="container">
-					{displayRental && (
-						<button onClick={() => deleteRentalID()}>{displayRental}</button>
-					)}
+				<div className="wrapper">
+					<h3>Username</h3>
+					<div className="content">
+						{displayRental && (
+							<SickButton onClick={() => deleteRentalID()}>
+								{displayRental}
+							</SickButton>
+						)}
+					</div>
 				</div>
-				<div className="container">
-					{displayEmployee && (
-						<button onClick={() => deleteEmployeeID()}>
-							{displayEmployee}
-						</button>
-					)}
+				<div className="wrapper">
+					<h3>Employee</h3>
+					<div className="content">
+						{displayEmployee && (
+							<SickButton onClick={() => deleteEmployeeID()}>
+								{displayEmployee}
+							</SickButton>
+						)}
+					</div>
 				</div>
-				<div className="container">
-					{displayStorage.map((item) => (
-						<button onClick={() => deleteStorageUnit(item.id)}>
-							{item.unitType}
-						</button>
-					))}
+				<div className="wrapper">
+					<h3>Storage units</h3>
+					<div className="content">
+						{displayStorage.map((item) => (
+							<SickButton onClick={() => deleteStorageUnit(item.id)}>
+								{item.unitType}
+							</SickButton>
+						))}
+					</div>
 				</div>
-				<div className="container">
-					{displayUnitTypes.map((item) => (
-						<button onClick={() => deleteStorageUnitType(item.id)}>
-							{item.unitType}
-						</button>
-					))}
+				<div className="wrapper">
+					<h3>Storage types</h3>
+					<div className="content">
+						{displayUnitTypes.map((item) => (
+							<SickButton onClick={() => deleteStorageUnitType(item.id)}>
+								{item.unitType}
+							</SickButton>
+						))}
+					</div>
 				</div>
-				<button onClick={createRentaListItems}>Update</button>
+				<SickButton disabled={loading} onClick={createRentaListItems}>
+					Create rental list
+				</SickButton>
 			</div>
 		</AccessStyles>
 	);
@@ -208,27 +255,28 @@ export const AccessStyles = styled.div`
 		justify-content: center;
 		align-items: center;
 		gap: 2rem;
+
+		/* @media (max-width: 1150px) {
+			flex-direction: column;
+			width: 85%;
+		} */
 	}
 
 	.DataDisplay {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 1rem;
+		gap: 5rem;
 
-		.forms {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
+		.wrapper {
+			display: grid;
+			grid-template-rows: auto;
 		}
-	}
 
-	.container {
-		padding: 2rem;
-		border: solid blue;
-		display: flex;
-		gap: 2rem;
+		.content {
+			display: flex;
+			gap: 2rem;
+		}
 	}
 `;
 
@@ -241,13 +289,20 @@ export const CardInfoStyles = styled.div`
 	align-items: center;
 	flex-direction: column;
 	gap: 2rem;
-	border: solid green;
+
 	margin: 2rem;
 	padding: 2rem;
 
 	.Container {
 		display: flex;
+		justify-content: space-between;
+		/* padding: 0 2rem; */
+		padding-left: 2rem;
+		background: var(--offWhite);
+		transform: skew(-15deg);
 		gap: 2rem;
+		/* border: solid red; */
+		width: 100%;
 	}
 `;
 

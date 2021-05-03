@@ -12,6 +12,7 @@ function Nav() {
 					<Link href="/about">About</Link>
 					<Link href="/faq">FAQ</Link>
 					<Link href="/storages">Storages</Link>
+					<Link href="/account">Account</Link>
 				</>
 			)}
 			{user && user?.role?.canAccessAdminFunctionClient && (
@@ -19,6 +20,7 @@ function Nav() {
 					<Link href="/about">About</Link>
 					<Link href="/faq">FAQ</Link>
 					<Link href="/storages">Storages</Link>
+					<Link href="/account">Account</Link>
 					<Link href="/admindashboard">Admin</Link>
 				</>
 			)}

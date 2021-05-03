@@ -25,6 +25,7 @@ function RentalStateProvider({ children }) {
 	//--------------------------------------
 	// Admin access Renal List states
 	const [rentalID, setRentalID] = useState("");
+	const [rentalMutation, setRentalMutation] = useState("");
 	const [employeeID, setEmployeeID] = useState("");
 	const [storageID, setStorageID] = useState([]);
 	const [storageMutation, setStorageMutation] = useState([]);
@@ -43,6 +44,7 @@ function RentalStateProvider({ children }) {
 	function grabRentalID(id, name) {
 		setRentalID(id);
 		setDisplayRental(name);
+		setRentalMutation("APPROVED");
 	}
 	function deleteRentalID() {
 		setRentalID("");
@@ -223,6 +225,7 @@ function RentalStateProvider({ children }) {
 				deleteStorageUnit,
 				displayUserName,
 				grabUserID,
+				rentalMutation,
 			}}
 		>
 			{children}

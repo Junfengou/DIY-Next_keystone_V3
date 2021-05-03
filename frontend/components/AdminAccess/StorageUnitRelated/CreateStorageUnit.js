@@ -26,7 +26,7 @@ const CREATE_STORAGE_UNIT_MUTATION = gql`
 
 function CreateStorageUnit() {
 	const [currentState, setCurrentState] = useState({});
-
+	const status = "AVAILABLE";
 	const [createStorageUnit, { data, error }] = useMutation(
 		CREATE_STORAGE_UNIT_MUTATION,
 		{
@@ -42,7 +42,7 @@ function CreateStorageUnit() {
 				<Formik
 					initialValues={{
 						description: "",
-						availability: "AVAILABLE",
+						availability: status,
 					}}
 					validate={(values) => {
 						const errors = {};

@@ -1,25 +1,35 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import UsernameStyles from "../styles/UsernameStyles";
+import SickButton from "../styles/SickButton";
 
 function MainAccess() {
 	return (
 		<MainAccessMenuStyles>
 			<>
-				<h1>Admin access dashboard</h1>
+				<UsernameStyles>Admin access dashboard</UsernameStyles>
 			</>
 			<div className="container">
-				<button>
-					<Link href="/adminrentallist">Create Rental list</Link>
-				</button>
+				<SickButton>
+					<Link href="/admincreaterentallist">Create Rental List</Link>
+				</SickButton>
 
-				<button>
+				<SickButton>
+					<Link href="/adminreadrentallist">Read Rental List</Link>
+				</SickButton>
+
+				<SickButton>
 					<Link href="/adminemployee">Create Employee</Link>
-				</button>
+				</SickButton>
 
-				<button>
+				<SickButton>
 					<Link href="/adminstorage">Create Storage</Link>
-				</button>
+				</SickButton>
+
+				<SickButton>
+					<Link href="/adminrole">Assign permission</Link>
+				</SickButton>
 			</div>
 
 			{/* Add another button for read rental list */}
@@ -30,7 +40,7 @@ function MainAccess() {
 export default MainAccess;
 
 const MainAccessMenuStyles = styled.div`
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;

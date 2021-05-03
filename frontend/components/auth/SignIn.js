@@ -92,6 +92,7 @@ function SignIn() {
 							<div className="formFieldWrapInner">
 								<Field type="email" name="email" className="field" />
 							</div>
+							<span>Enter the email you used to sign up</span>
 							<ErrorMessage name="email" component="div" className="error" />
 						</div>
 
@@ -102,6 +103,10 @@ function SignIn() {
 							<div className="formFieldWrapInner">
 								<Field type="password" name="password" className="field" />
 							</div>
+							<span>
+								Password must contain one number, one lower case, one uppercase,
+								and one symbol
+							</span>
 							<ErrorMessage name="password" component="div" className="error" />
 						</div>
 
@@ -200,6 +205,10 @@ export const FormStyles = styled.div`
 			text-decoration: none;
 			font-weight: normal;
 		}
+	}
+
+	span {
+		font-size: 1rem;
 	}
 
 	@media (max-width: 850px) {

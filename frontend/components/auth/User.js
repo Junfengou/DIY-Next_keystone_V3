@@ -9,8 +9,20 @@ export const CURRENT_USER_QUERY = gql`
 				name
 				username
 				email
+				address
+				city
+				state
+				zipcode
 				role {
+					id
+					name
 					canAccessAdminFunctionClient
+				}
+				rental {
+					availability
+					rental {
+						storageUnitType
+					}
 				}
 			}
 		}
