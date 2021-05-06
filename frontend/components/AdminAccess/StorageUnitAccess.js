@@ -67,7 +67,7 @@ function StorageUnitAccess() {
 						<div className="tagFooter">
 							<h4>${storageInfo.price / 100}</h4>
 							<CopyToClipboard text={storageInfo.id} onCopy={onCopyText}>
-								<SickButton>Copy User ID</SickButton>
+								<SickButton>Copy unit ID</SickButton>
 							</CopyToClipboard>
 							<span>{isCopied ? " Copied " : ""}</span>
 						</div>

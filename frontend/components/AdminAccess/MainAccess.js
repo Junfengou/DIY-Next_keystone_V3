@@ -40,7 +40,7 @@ function MainAccess() {
 					</SickButton>
 
 					<SickButton>
-						<Link href="/adminreadstoragetype">Read Storages units type</Link>
+						<Link href="/adminreadstoragetype">Read Storages unit types</Link>
 					</SickButton>
 				</div>
 
