@@ -28,7 +28,7 @@ export const permissionFields = {
 
   canManageRoles: checkbox({
     defaultValue: false,
-    label: 'Only admin access can manage role',
+    label: 'Admin Dashboard access',
   }),
 
   // ---------------------------------------------------
