@@ -21,7 +21,7 @@ export const User = list({
         country: text({isRequired: true}),
         phone: text({isRequired: true}),
         // drlic: text({isRequired: true}),
-        additionalInfo: text(), 
+        // additionalInfo: text(), 
         rental: relationship({ref:"Rental.user"}),
         role: relationship({ref: "Role.assignedTo"}), // Also add access control
         // rentallist: relationship({ref: "RentalList"}),

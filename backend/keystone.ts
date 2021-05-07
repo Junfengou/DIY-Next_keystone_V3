@@ -37,7 +37,8 @@ config({
   // @ts-ignore
   server: {
     cors: {
-      origin: [process.env.FRONTEND_URL],
+      // origin: [process.env.FRONTEND_URL], // turn this to true
+      origin:true,
       credentials: true,
     },
   },
